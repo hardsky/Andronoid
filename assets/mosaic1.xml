@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mosaic>
+  <row>
+    <hole /><hole /><green /><green /><hole /><hole />
+  </row>
+  <row>
+    <hole /><green /><green /><green /><green /><hole />
+  </row>
+  <row>
+    <green /><green /><green /><green /><green /><green />
+  </row>
+  <row>
+    <hole /><green /><green /><green /><green /><hole />
+  </row>
+  <row>
+    <hole /><hole /><green /><green /><hole /><hole />
+  </row>
+</mosaic>
