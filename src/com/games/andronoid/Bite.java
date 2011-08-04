@@ -11,7 +11,8 @@ public class Bite extends Graphic implements ISensorListener {
 	private long mSensorTimeStamp = 0;
 	private long mCpuTimeStamp = 0;
 	private float mLastPosX = 0;
-	private float mAccelX = 0;	
+	private float mAccelX = 0;
+	private float mFriction = 0.3f;
 
 	public Bite(BitmapDrawable oBite, DisplayMetrics metrics)
 	{
@@ -61,7 +62,7 @@ public class Bite extends Graphic implements ISensorListener {
 		{
 			final float dTC = dT / mLastDeltaT;
 			final float dTdT = dT * dT;
-			final float x = mPosX + dTC * (mPosX - mLastPosX) + mAccelX
+			final float x = mPosX + (1 - mFriction)*dTC * (mPosX - mLastPosX) + mAccelX
 					* dTdT;
 					
 			mLastPosX = mPosX;
