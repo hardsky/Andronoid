@@ -1,9 +1,9 @@
 package com.games.andronoid;
 
-import android.graphics.Rect;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 
-public class World {
+public class World implements ISensorListener {
 	
 	private Ball mBall;
 	private Bite mBite;
@@ -14,14 +14,11 @@ public class World {
 	{
 		mBall = ball;
 		mBite = bite;
-		mMosaic = mosaic;	
-		
-		mBite.registerAccelerometer();
+		mMosaic = mosaic;			
 	}
 	
 	public void Stop()
 	{
-		mBite.unregisterAccelerometer();		
 	}
 		
 	private void ComputePhysics()
@@ -53,9 +50,7 @@ public class World {
 	{
 		float x = mField.exactCenterX();
 		mBall = new Ball(mBall);
-		mBite.unregisterAccelerometer();
 		mBite = new Bite(mBite);
-		mBite.registerAccelerometer();
 		mBite.setOrigin(x-mBite.getPlace().width()/2, mField.height() - mBite.getPlace().height() - 1);//bite on the bottom
 		mBall.setOrigin(x - mBall.getPlace().width()/2, mBite.getPlace().top - mBall.getPlace().height() - 1);
 		//TODO: attach game play
@@ -89,4 +84,8 @@ public class World {
 		mMosaic.setOrigin(x - mMosaic.getPlace().width()/2, 1);		
 	}
 
+	@Override
+	public void onSensorChanged(float fSensorX, long eventTime, long cpuTime) {
+		mBite.onSensorChanged(fSensorX, eventTime, cpuTime);
+	}
 }

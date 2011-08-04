@@ -8,12 +8,8 @@ public class Ball extends Graphic {
 
 	private float mVX;
 	private float mVY;
-	private float mLastPosX;
-	private float mLastPosY;
 	private long mLastT;
 	private float mLastDeltaT;
-	private float mRadius = 0.002f;
-
 	public Ball(BitmapDrawable oBall, DisplayMetrics metrics) {
 		super(oBall, metrics, 0.002f, 0.002f);
 		mVX = 0.02f;
@@ -26,13 +22,6 @@ public class Ball extends Graphic {
 		mVY = 0.02f;
 	}
 
-	/*
-	 * private void Init() { mVX = 0.02f; mVY = 0.02f; mLastPosX = 0; mLastPosY
-	 * = 0; //mLastT = 0; mLastDeltaT = 0; mPosX = 0; mPosY = 0; }
-	 * 
-	 * @Override public void setOrigin(float left, float top) {
-	 * super.setOrigin(left, top); Init(); }
-	 */
 	public void Impact(ImpactType enType, Rect oIntersect) {
 		switch (enType) {
 		case left:
@@ -60,14 +49,11 @@ public class Ball extends Graphic {
 		final float dT = (float) (now - mLastT) * (1.0f / 1000000000.0f);
 		mLastT = now;
 		if (mLastDeltaT != 0) {
-			final float dTC = dT / mLastDeltaT;
-			final float x = mPosX /* + dTC * (mPosX - mLastPosX) */+ mVX * dT;
-			final float y = mPosY /* + dTC * (mPosY - mLastPosY) */+ mVY * dT;
+			final float x = mPosX + mVX * dT;
+			final float y = mPosY + mVY * dT;
 
-			mLastPosX = mPosX;
 			mPosX = x;
 
-			mLastPosY = mPosY;
 			mPosY = y;
 		}
 
