@@ -106,15 +106,27 @@ public class Ball extends Graphic {
 			if (isLeftTop) {
 				katetX = ballX - rt.left;
 				katetY = rt.top - ballY;
+				
+				mPosX -= (rt.width() + 1) /mMetersToPixelsX;
+				mPosY -= (rt.height() + 1) /mMetersToPixelsY;
 			} else if (isLeftBottom) {
 				katetX = ballX - rt.left;
 				katetY = rt.bottom - ballY;
+				
+				mPosX -= (rt.width() + 1) /mMetersToPixelsX;
+				mPosY += (rt.height() + 1) /mMetersToPixelsY;
 			} else if (isRigthBottom) {
 				katetX = ballX - rt.right;
 				katetY = rt.bottom - ballY;
+				
+				mPosX += (rt.width() + 1) /mMetersToPixelsX;
+				mPosY += (rt.height() + 1) /mMetersToPixelsY;				
 			} else if (isRigthTop) {
 				katetX = ballX - rt.right;
 				katetY = rt.top - ballY;
+				
+				mPosX += (rt.width() + 1) /mMetersToPixelsX;
+				mPosY -= (rt.height() + 1) /mMetersToPixelsY;				
 			} else
 				// there is no impact
 				return false;
