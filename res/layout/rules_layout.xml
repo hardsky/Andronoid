@@ -2,10 +2,12 @@
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
-    <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/txtHeader" android:text="@string/txt_header" android:layout_gravity="center_horizontal"></TextView>
-    <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/txt_rules" android:id="@+id/txtRules" android:paddingTop="10px" android:paddingBottom="20px" android:paddingLeft="5px" android:paddingRight="5px"></TextView>
-    <Button android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:id="@+id/btnBack" android:text="@string/btn_back" android:layout_width="150dp"></Button>
-    
+  android:layout_height="wrap_content" android:layout_width="wrap_content">
+    <ScrollView android:id="@+id/scrollView1" android:layout_height="wrap_content" android:layout_width="fill_parent">
+        <LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="vertical">
+		    <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/txtHeader" android:text="@string/txt_header" android:layout_gravity="center_horizontal"></TextView>
+		    <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/txt_rules" android:id="@+id/txtRules" android:paddingTop="10px" android:paddingBottom="20px" android:paddingLeft="5px" android:paddingRight="5px"></TextView>
+		    <Button android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:id="@+id/btnBack" android:text="@string/btn_back" android:layout_width="150dp"></Button>
+        </LinearLayout>
+    </ScrollView>    
 </LinearLayout>
