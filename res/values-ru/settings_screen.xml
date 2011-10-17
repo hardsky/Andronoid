@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="btn_sound">Звук</string>
+    <string name="btn_controls">Управление</string>
+    
+</resources>

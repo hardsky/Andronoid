@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <game>
   <stage id="1" background="bg.png" music="" >
-    <mosaic name="mosaic1.xml" />
-    <mosaic name="mosaic2.xml" />
-    <mosaic name="mosaic3.xml" />
+    <mosaic name="mosaic1.xml" level="1" />
+    <mosaic name="mosaic2.xml" level="2" />
+    <mosaic name="mosaic3.xml" level="3" />
   </stage>
 </game>
