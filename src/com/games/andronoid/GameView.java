@@ -21,15 +21,21 @@ public class GameView extends View implements SensorEventListener{
 	private Display mDisplay = null;
 	private SensorManager mSensorManager = null;
 	private Sensor mAccelerometer = null;
-	private Game mGame;
 	private Stage mStage;
-	private Level mLevel;
 	private Resources mRc;
 	private World mWorld;
 	private DisplayMetrics mMetrics;
+	
+	private String mMosaicName;
+	private String mBackGroundFile;
+	private String mMusicFile;
 
-	public GameView(Context context) {
+	public GameView(Context context, String sMosaicName, String sBackGroundFile, String sMusicFile) {
 		super(context);
+		mMosaicName = sMosaicName;
+		mBackGroundFile = sBackGroundFile;
+		mMusicFile = sMusicFile;
+		
 		WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         mDisplay = windowManager.getDefaultDisplay();		
         mSensorManager  = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
@@ -38,9 +44,6 @@ public class GameView extends View implements SensorEventListener{
         windowManager.getDefaultDisplay().getMetrics(mMetrics);
         
         mRc = getResources();
-		mGame = Parser.CreateGame(mRc);
-		mStage = (Stage) mGame.Next();
-		mLevel = (Level) mStage.Next();		
 	}
 
 
@@ -50,7 +53,7 @@ public class GameView extends View implements SensorEventListener{
         mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
 		
         try {
-			this.setBackgroundDrawable(new BitmapDrawable(mRc, mRc.getAssets().open(mStage.getBackgroundImgFile())));
+			this.setBackgroundDrawable(new BitmapDrawable(mRc, mRc.getAssets().open(mBackGroundFile)));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,7 +64,7 @@ public class GameView extends View implements SensorEventListener{
 	{		
 		Ball oBall = new Ball((BitmapDrawable) mRc.getDrawable(R.drawable.ball), mMetrics);
 		Bite oBite = new Bite((BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetrics);
-		Mosaic oMosaic = Parser.CreateMosaic(mRc, mLevel.getMosaicName());
+		Mosaic oMosaic = Parser.CreateMosaic(mRc, mMosaicName);
 		return new World(oBall, oBite, oMosaic);
 	}
 	

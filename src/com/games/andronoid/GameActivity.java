@@ -1,6 +1,7 @@
 package com.games.andronoid;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -11,7 +12,7 @@ public class GameActivity extends Activity {
     private WakeLock mWakeLock;
     private GameView mGameView;
     
-    /** Called when the activity is first created. */
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,9 +20,18 @@ public class GameActivity extends Activity {
         mPowerManager = (PowerManager) getSystemService(POWER_SERVICE);
         mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, getClass()
                 .getName());
+        
+        Intent inte = getIntent();
+        Bundle bn = inte.getExtras();
+        
+        String sMosaicName = (String)bn.get("com.games.andronoid.mosaic");
+        String sBackGroundFile = (String)bn.get("com.games.andronoid.background");
+        String sMusicFile = (String)bn.get("com.games.andronoid.music");
 				        
-        mGameView = new GameView(this);
+
+        mGameView = new GameView(this, sMosaicName, sBackGroundFile, sMusicFile);
         setContentView(mGameView);
+        
     }
     
     @Override

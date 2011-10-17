@@ -23,7 +23,7 @@ public class Part {
 
     public boolean IsEnded()
     {
-    	return mCurIdx > mParts.size();
+    	return mCurIdx >= mParts.size();
     }
 
 }

@@ -39,6 +39,7 @@ public class Parser {
 					 else if(tagName.equalsIgnoreCase("mosaic"))
 					 {
 						 lvl = new Level();
+						 lvl.setLevelName(parser.getAttributeValue(null, "level"));
 						 lvl.setMosaicName(parser.getAttributeValue(null, "name"));
 						 st.Add(lvl);
 					 }

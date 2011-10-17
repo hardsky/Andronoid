@@ -19,4 +19,8 @@ public class Stage extends Part {
 	public void setMusic(String sMusicFile) {
 		mMusicFileName = sMusicFile;
 	}
+	
+	public String getMusic(){
+		return mMusicFileName;
+	}
 }
