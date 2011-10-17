@@ -7,45 +7,47 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class StartActivity extends Activity {
+public class StartActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.start_layout);
 			    
-	    Utility.SetClickListener(findViewById(R.id.btnStart), mStartListener);
-	    Utility.SetClickListener(findViewById(R.id.btnRules), mRulesListener);
-	    Utility.SetClickListener(findViewById(R.id.btnSettings), mSettingsListener);
-	    Utility.SetClickListener(findViewById(R.id.btnExit), mExitListener);
+	    Utility.SetClickListener(findViewById(R.id.btnStart), this);
+	    Utility.SetClickListener(findViewById(R.id.btnRules), this);
+	    Utility.SetClickListener(findViewById(R.id.btnSettings), this);
+	    Utility.SetClickListener(findViewById(R.id.btnExit), this);
 	}
 	
-	private void StartStageActivity(){
-		Intent intent = new Intent(this, StageActivity.class);		
-		startActivity(intent);		
-	}
-	
-	private OnClickListener mStartListener = new OnClickListener() {
-	    public void onClick(View v) {
-	    	StartStageActivity();
-	    }
-	};
-		
-	private OnClickListener mRulesListener = new OnClickListener() {
-	    public void onClick(View v) {
-	      // do something when the button is clicked
-	    }
-	};
-	
-	private OnClickListener mSettingsListener = new OnClickListener() {
-	    public void onClick(View v) {
-	      // do something when the button is clicked
-	    }
-	};	
-	
-	private OnClickListener mExitListener = new OnClickListener() {
-	    public void onClick(View v) {
-	    	finish();
-	    }
-	};	
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch(v.getId())
+		{
+			case R.id.btnStart:
+			{
+				Intent intent = new Intent(this, StageActivity.class);		
+				startActivity(intent);		
+				break;
+			}
+			case R.id.btnRules:
+			{
+				Intent intent = new Intent(this, RulesActivity.class);		
+				startActivity(intent);		
+				break;
+			}
+			case R.id.btnSettings:
+			{
+				Intent intent = new Intent(this, SettingsActivity.class);		
+				startActivity(intent);		
+				break;
+			}
+			case R.id.btnExit:
+			{
+				finish();
+				break;
+			}
+		}
+	}	
 	
 }
