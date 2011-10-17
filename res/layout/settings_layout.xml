@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout1" android:layout_width="wrap_content" android:layout_centerVertical="true" android:layout_centerHorizontal="true" android:orientation="vertical">
+        <LinearLayout android:id="@+id/linearLayout2" android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal" android:weightSum="1">
+            <Button android:layout_height="wrap_content" android:layout_width="150dp" android:id="@+id/btnSound" android:text="@string/btn_sound"></Button>
+            <ImageView android:maxHeight="50px" android:maxWidth="50px" android:scaleType="fitCenter" android:id="@+id/imgSpeaker"></ImageView>
+        </LinearLayout>
+        <Button android:text="@string/btn_controls" android:id="@+id/btnControls" android:layout_width="150dp" android:layout_height="wrap_content"></Button>
+        <Button android:layout_width="150dp" android:id="@+id/btnBack" android:text="@string/btn_back" android:layout_height="wrap_content"></Button>
+    </LinearLayout>
+    
+</RelativeLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/relativeLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent" android:gravity="center">
+	    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/linearLayout1" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<Button android:id="@+id/btnStart" android:layout_height="wrap_content" android:layout_width="150dp" android:text="@string/btn_start"></Button>
+			<Button android:text="@string/btn_rules" android:layout_height="wrap_content" android:layout_width="150dp" android:id="@+id/btnRules"></Button>
+			<Button android:text="@string/btn_settings" android:layout_height="wrap_content" android:layout_width="150dp" android:id="@+id/btnSettings"></Button>
+			<Button android:layout_height="wrap_content" android:layout_width="150dp" android:text="@string/btn_exit" android:id="@+id/btnExit"></Button>
+	    </LinearLayout>
+    </RelativeLayout>	
+
