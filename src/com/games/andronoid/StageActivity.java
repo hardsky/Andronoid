@@ -23,10 +23,11 @@ public class StageActivity extends Activity {
 			while(!st.IsEnded()){
 				Level lv = (Level)st.Next();
 				
-				TextView txt = new TextView(getBaseContext());
-				txt.append(" " + lv.getLevelName());
+				TextView txt = new TextView(getBaseContext());		
+				txt.append(getString(R.string.level) + " " + lv.getLevelName());
 				txt.setTag(lv.getMosaicName() + "," + st.getBackgroundImgFile() + "," + st.getMusic());
 				txt.setOnClickListener(mClickListener);
+				txt.setBackgroundResource(R.drawable.green);
 				
 				LinearLayout ll = (LinearLayout)findViewById(R.id.ll);
 				ll.addView(txt);
