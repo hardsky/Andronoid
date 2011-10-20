@@ -11,13 +11,13 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-public class SeekBarPreference extends Preference implements
+public class SeekBarMass extends Preference implements
 OnSeekBarChangeListener {
 
 	private TextView valueTextView;
 	private int currentValue;
 	private int max;
-	public SeekBarPreference(Context context, AttributeSet attrs) {
+	public SeekBarMass(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		max = attrs.getAttributeIntValue(
 				"http://schemas.android.com/apk/res/com.games.andronoid", "maxVal", 100);
@@ -43,16 +43,16 @@ OnSeekBarChangeListener {
 		
 		LinearLayout layout = (LinearLayout) LayoutInflater.from(
 				getContext())
-				.inflate(R.layout.seek_bar_preference_layout, null);
+				.inflate(R.layout.mass_fragment, null);
 
-		SeekBar bar = (SeekBar) layout.findViewById(R.id.seekPrefBar);
+		SeekBar bar = (SeekBar) layout.findViewById(R.id.sbMass);
 		bar.setMax(max);
 		bar.setProgress(currentValue);
 		bar.setOnSeekBarChangeListener(this);
 		
-		((TextView)layout.findViewById(R.id.seekPrefTitle)).setText(getTitle());
+		((TextView)layout.findViewById(R.id.txtMassTitle)).setText(getTitle());
 
-		valueTextView = (TextView) layout.findViewById(R.id.seekPrefValue);
+		valueTextView = (TextView) layout.findViewById(R.id.txtSummary);
 		valueTextView.setText(getSummary() + " " + currentValue);
 		
 		return layout;

@@ -16,7 +16,14 @@
 		android:key="friction"
 		android:persistent="true"
 		/>        
-        <Preference android:key="mass" android:title="@string/mass" android:layout="@layout/mass_fragment"></Preference>
+		<com.games.andronoid.SeekBarMass
+		android:title="@string/mass" 
+		app:maxVal="100" 
+		android:summary="@string/mass_little" 
+		app:curVal="30" 
+		android:key="mass"
+		android:persistent="true"
+		/>        
         </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/lst_difficulty" android:key="pref_difficulty">
