@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res/com.games.andronoid">
+    <PreferenceCategory
+        android:title="@string/hdSound">
+        <CheckBoxPreference android:title="@string/ch_enabled" android:key="music" android:defaultValue="@bool/music_enable"></CheckBoxPreference>
+        </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/hdControls">
+		<com.games.andronoid.SeekBarPreference
+		android:title="@string/friction" 
+		app:maxVal="100" 
+		android:summary="@string/friction_little" 
+		app:curVal="30" 
+		android:key="friction"
+		android:persistent="true"
+		/>        
+        <Preference android:key="mass" android:title="@string/mass" android:layout="@layout/mass_fragment"></Preference>
+        </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/lst_difficulty" android:key="pref_difficulty">
+        <ListPreference android:entries="@array/arDifficultyTitles" android:entryValues="@array/arDifficultyValues" android:title="@string/lst_difficulty" android:key="difficulty"></ListPreference>
+        </PreferenceCategory>
+</PreferenceScreen>

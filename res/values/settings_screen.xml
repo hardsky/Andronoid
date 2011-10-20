@@ -2,5 +2,10 @@
 <resources>
     <string name="btn_sound">Sound</string>
     <string name="btn_controls">Controls</string>
+    <string name="hdSound">Sound</string>
+    <string name="hdControls">Controls</string>
+    <string name="hdDifficulty">Difficulty</string>
+    <string name="ch_enabled">Enabled</string>
+    <string name="lst_difficulty">Difficulty</string>
     
 </resources>

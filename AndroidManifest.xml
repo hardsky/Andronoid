@@ -6,7 +6,7 @@
     <uses-sdk android:minSdkVersion="7" />
 
     <application android:icon="@drawable/icon" android:label="@string/app_name">
-        <activity android:name="GameActivity"
+        <activity android:name=".GameActivity"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="landscape">
         </activity>
         <activity android:name=".StageActivity"

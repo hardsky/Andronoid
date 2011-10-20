@@ -2,5 +2,10 @@
 <resources>
     <string name="btn_sound">Звук</string>
     <string name="btn_controls">Управление</string>
+    <string name="hdSound">Звук</string>
+    <string name="hdControls">Управление</string>
+    <string name="hdDifficulty">Сложность</string>
+    <string name="ch_enabled">Включить</string>
+    <string name="lst_difficulty">Сложность</string>
     
 </resources>
