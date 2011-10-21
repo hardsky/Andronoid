@@ -9,12 +9,16 @@ public class World implements ISensorListener {
 	private Bite mBite;
 	private Mosaic mMosaic;
 	private Rect mField;
+	private String mDifficulty;
+	private int mFriction;
 
-	public World(Ball ball, Bite bite, Mosaic mosaic)
+	public World(Ball ball, Bite bite, Mosaic mosaic, String sDifficulty, int nFriction)
 	{
 		mBall = ball;
 		mBite = bite;
-		mMosaic = mosaic;			
+		mMosaic = mosaic;	
+		mDifficulty = sDifficulty;
+		mFriction = nFriction;
 	}
 	
 	public void Stop()
@@ -49,8 +53,8 @@ public class World implements ISensorListener {
 	private void LossBall()
 	{
 		float x = mField.exactCenterX();
-		mBall = new Ball(mBall);
-		mBite = new Bite(mBite);
+		mBall = new Ball(mBall, mDifficulty);
+		mBite = new Bite(mBite, mFriction);
 		mBite.setOrigin(x-mBite.getPlace().width()/2, mField.height() - mBite.getPlace().height() - 1);//bite on the bottom
 		mBall.setOrigin(x - mBall.getPlace().width()/2, mBite.getPlace().top - mBall.getPlace().height() - 1);
 		//TODO: attach game play

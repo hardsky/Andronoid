@@ -18,7 +18,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		
 		ListPreference difficulty = (ListPreference)this.findPreference("difficulty");
 		difficulty.setSummary(difficulty.getEntry());
-		//difficulty.setOnPreferenceChangeListener(this);
+		difficulty.setOnPreferenceChangeListener(this);
 		
 		CheckBoxPreference music = (CheckBoxPreference)this.findPreference("music");
 		music.setOnPreferenceChangeListener(this);

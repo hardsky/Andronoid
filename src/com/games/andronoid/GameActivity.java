@@ -2,9 +2,11 @@ package com.games.andronoid;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.preference.PreferenceManager;
 
 public class GameActivity extends Activity {
 	
@@ -27,9 +29,15 @@ public class GameActivity extends Activity {
         String sMosaicName = (String)bn.get("com.games.andronoid.mosaic");
         String sBackGroundFile = (String)bn.get("com.games.andronoid.background");
         String sMusicFile = (String)bn.get("com.games.andronoid.music");
-				        
-
-        mGameView = new GameView(this, sMosaicName, sBackGroundFile, sMusicFile);
+        
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        
+        int nFriction = settings.getInt("friction", 30);
+        int nMass = settings.getInt("mass", 50);
+        boolean bMusic = settings.getBoolean("music", true);
+        String sDifficulty = settings.getString("difficulty", "normal"); 
+        
+        mGameView = new GameView(this, sMosaicName, sBackGroundFile, sMusicFile, nFriction, nMass, bMusic, sDifficulty);
         setContentView(mGameView);
         
     }

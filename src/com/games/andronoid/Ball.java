@@ -10,16 +10,42 @@ public class Ball extends Graphic {
 	private float mVY;
 	private long mLastT;
 	private float mLastDeltaT;
-	public Ball(BitmapDrawable oBall, DisplayMetrics metrics) {
+	public Ball(BitmapDrawable oBall, DisplayMetrics metrics, String sDifficulty) {
 		super(oBall, metrics, 0.002f, 0.002f);
-		mVX = 0.02f;
-		mVY = 0.02f;
+		if(sDifficulty.equalsIgnoreCase("easy")){
+			
+			mVX = 0.005f;
+			mVY = 0.005f;
+		}
+		else if(sDifficulty.equalsIgnoreCase("hard")){
+			
+			mVX = 0.1f;
+			mVY = 0.1f;
+		}
+		else{//normal
+			
+			mVX = 0.02f;
+			mVY = 0.02f;
+		}			
 	}
 
-	public Ball(Ball lostBall) {
+	public Ball(Ball lostBall, String sDifficulty) {
 		super(lostBall);
-		mVX = 0.02f;
-		mVY = 0.02f;
+		if(sDifficulty.equalsIgnoreCase("easy")){
+			
+			mVX = 0.005f;
+			mVY = 0.005f;
+		}
+		else if(sDifficulty.equalsIgnoreCase("hard")){
+			
+			mVX = 0.1f;
+			mVY = 0.1f;
+		}
+		else{//normal
+			
+			mVX = 0.02f;
+			mVY = 0.02f;
+		}			
 	}
 
 	public void Impact(ImpactType enType, Rect oIntersect) {

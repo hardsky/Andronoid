@@ -53,7 +53,7 @@ OnSeekBarChangeListener {
 		((TextView)layout.findViewById(R.id.txtMassTitle)).setText(getTitle());
 
 		valueTextView = (TextView) layout.findViewById(R.id.txtSummary);
-		valueTextView.setText(getSummary() + " " + currentValue);
+		valueTextView.setText(getSummary() + " " + currentValue + " " +  this.getContext().getString(R.string.kg));
 		
 		return layout;
 	}
@@ -76,6 +76,6 @@ OnSeekBarChangeListener {
 		if (shouldPersist()) {
 		    persistInt(newValue);
 		}		
-		valueTextView.setText(getSummary() + " " + newValue);
+		valueTextView.setText(getSummary() + " " + newValue + " " + this.getContext().getString(R.string.kg));
 	}
 }

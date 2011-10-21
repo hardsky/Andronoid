@@ -14,13 +14,15 @@ public class Bite extends Graphic implements ISensorListener {
 	private float mAccelX = 0;
 	private float mFriction = 0.3f;
 
-	public Bite(BitmapDrawable oBite, DisplayMetrics metrics)
+	public Bite(BitmapDrawable oBite, DisplayMetrics metrics, int nFriction)
 	{
-		super(oBite, metrics, 0.01f, 0.002f);
+		super(oBite, metrics, 0.01f, 0.002f);		
+		mFriction = nFriction / 100f;
 	}
 		
-	public Bite(Bite bite) {
+	public Bite(Bite bite, int nFriction) {
 		super(bite);
+		mFriction = nFriction / 100f;
 	}
 
 	//return true, if ball && bite is intersected

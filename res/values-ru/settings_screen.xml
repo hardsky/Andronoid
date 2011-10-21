@@ -7,5 +7,6 @@
     <string name="hdDifficulty">Сложность</string>
     <string name="ch_enabled">Включить</string>
     <string name="lst_difficulty">Сложность</string>
+    <string name="kg">кг.</string>
     
 </resources>

@@ -29,12 +29,22 @@ public class GameView extends View implements SensorEventListener{
 	private String mMosaicName;
 	private String mBackGroundFile;
 	private String mMusicFile;
+	
+	private int mFriction;
+	private int mMass;
+	private boolean mEnableMusic;
+	private String mDifficulty;
 
-	public GameView(Context context, String sMosaicName, String sBackGroundFile, String sMusicFile) {
+	public GameView(Context context, String sMosaicName, String sBackGroundFile, String sMusicFile, int nFriction, int nMass, boolean bMusic, String sDifficulty) {
 		super(context);
 		mMosaicName = sMosaicName;
 		mBackGroundFile = sBackGroundFile;
 		mMusicFile = sMusicFile;
+		
+		mFriction = nFriction;
+		mMass = nMass;
+		mEnableMusic = bMusic;
+		mDifficulty = sDifficulty;
 		
 		WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         mDisplay = windowManager.getDefaultDisplay();		
@@ -62,10 +72,10 @@ public class GameView extends View implements SensorEventListener{
 	
 	private World CreateWorld()
 	{		
-		Ball oBall = new Ball((BitmapDrawable) mRc.getDrawable(R.drawable.ball), mMetrics);
-		Bite oBite = new Bite((BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetrics);
+		Ball oBall = new Ball((BitmapDrawable) mRc.getDrawable(R.drawable.ball), mMetrics, mDifficulty);
+		Bite oBite = new Bite((BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetrics, mFriction);
 		Mosaic oMosaic = Parser.CreateMosaic(mRc, mMosaicName);
-		return new World(oBall, oBite, oMosaic);
+		return new World(oBall, oBite, oMosaic, mDifficulty, mFriction);
 	}
 	
 	public void stopGame() {

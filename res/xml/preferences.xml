@@ -26,7 +26,10 @@
 		/>        
         </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/lst_difficulty" android:key="pref_difficulty">
-        <ListPreference android:entries="@array/arDifficultyTitles" android:entryValues="@array/arDifficultyValues" android:title="@string/lst_difficulty" android:key="difficulty"></ListPreference>
+        android:title="@string/lst_difficulty">
+        <ListPreference android:entries="@array/arDifficultyTitles" 
+        android:entryValues="@array/arDifficultyValues" 
+        android:title="@string/lst_difficulty" 
+        android:key="difficulty"></ListPreference>
         </PreferenceCategory>
 </PreferenceScreen>
