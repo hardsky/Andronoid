@@ -1,5 +1,6 @@
 package com.games.andronoid;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
@@ -11,6 +12,7 @@ public class World implements ISensorListener {
 	private Rect mField;
 	private String mDifficulty;
 	private int mFriction;
+	private Context mContext;
 
 	public World(Ball ball, Bite bite, Mosaic mosaic, String sDifficulty, int nFriction)
 	{
@@ -54,7 +56,7 @@ public class World implements ISensorListener {
 	{
 		float x = mField.exactCenterX();
 		mBall = new Ball(mBall, mDifficulty);
-		mBite = new Bite(mBite, mFriction);
+		mBite = new NosyBite(mContext, mBite, mFriction);
 		mBite.setOrigin(x-mBite.getPlace().width()/2, mField.height() - mBite.getPlace().height() - 1);//bite on the bottom
 		mBall.setOrigin(x - mBall.getPlace().width()/2, mBite.getPlace().top - mBall.getPlace().height() - 1);
 		//TODO: attach game play

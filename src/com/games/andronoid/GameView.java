@@ -34,9 +34,11 @@ public class GameView extends View implements SensorEventListener{
 	private int mMass;
 	private boolean mEnableMusic;
 	private String mDifficulty;
+	private Context mContext;
 
 	public GameView(Context context, String sMosaicName, String sBackGroundFile, String sMusicFile, int nFriction, int nMass, boolean bMusic, String sDifficulty) {
 		super(context);
+		mContext = context;
 		mMosaicName = sMosaicName;
 		mBackGroundFile = sBackGroundFile;
 		mMusicFile = sMusicFile;
@@ -73,8 +75,8 @@ public class GameView extends View implements SensorEventListener{
 	private World CreateWorld()
 	{		
 		Ball oBall = new Ball((BitmapDrawable) mRc.getDrawable(R.drawable.ball), mMetrics, mDifficulty);
-		Bite oBite = new Bite((BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetrics, mFriction);
-		Mosaic oMosaic = Parser.CreateMosaic(mRc, mMosaicName);
+		Bite oBite = new NosyBite(mContext, (BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetrics, mFriction);
+		Mosaic oMosaic = Parser.CreateMosaic(mContext, mRc, mMosaicName);
 		return new World(oBall, oBite, oMosaic, mDifficulty, mFriction);
 	}
 	

@@ -6,6 +6,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 
@@ -58,7 +59,7 @@ public class Parser {
         return gl;		
 	}
 
-	public static Mosaic CreateMosaic(Resources rc, String name)
+	public static Mosaic CreateMosaic(Context context, Resources rc, String name)
 	{
 		Mosaic mosaic = new Mosaic();
         try {
@@ -81,11 +82,12 @@ public class Parser {
 					}
 					else if(tagName.equalsIgnoreCase("hole"))
 					{
-						row.addBrick(Brick.Create(Brick.Type.hole, rc));
+						row.addBrick(Brick.Create(context, Brick.Type.hole, rc));
 					}
 					else if(tagName.equalsIgnoreCase("green"))
 					{
-						row.addBrick(Brick.Create(Brick.Type.green, rc));
+						//row.addBrick(Brick.Create(context, Brick.Type.green, rc));
+						row.addBrick(Brick.Create(context, Brick.Type.nosy, rc));
 					}
 				}
 				

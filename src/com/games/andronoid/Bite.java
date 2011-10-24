@@ -24,7 +24,7 @@ public class Bite extends Graphic implements ISensorListener {
 		super(bite);
 		mFriction = nFriction / 100f;
 	}
-
+	
 	//return true, if ball && bite is intersected
 	public boolean Intesect(Ball ball) {
 		// TODO: more cases

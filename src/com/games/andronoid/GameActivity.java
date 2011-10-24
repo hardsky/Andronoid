@@ -1,8 +1,5 @@
 package com.games.andronoid;
 
-import java.io.FileDescriptor;
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,32 +46,15 @@ public class GameActivity extends Activity {
         
         mGameView = new GameView(this, sMosaicName, sBackGroundFile, sMusicFile, nFriction, nMass, bMusic, sDifficulty);
         setContentView(mGameView);
-        /*
-         * when the activity is resumed, we acquire a wake-lock so that the
-         * screen stays on, since the user will likely not be fiddling with the
-         * screen or buttons.
-         */
         mWakeLock.acquire();
-        /*
-        MediaPlayer mediaPlayer = new MediaPlayer(); //MediaPlayer.create(this,getAssets().open("track.mp3"));
-        try {
-        	FileDescriptor fd = new FileDescriptor();
-        	
-			mediaPlayer.setDataSource(fd);//.setDataSource("track.mp3");
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-        
-        mPlayer = MediaPlayer.create(this, R.raw.kick);        
-        mPlayer.setLooping(true);
-        mPlayer.start();
+        if(bMusic){
+	        mPlayer = MediaPlayer.create(this, R.raw.andronoid);        
+	        mPlayer.setLooping(true);
+	        mPlayer.start();
+        }
+        else{
+        	mPlayer = null;
+        }
 		mGameView.startGame();
     }
 
@@ -86,7 +66,9 @@ public class GameActivity extends Activity {
          * release our sensor resources and wake locks
          */
 
-        mPlayer.stop();
+        if(mPlayer != null)
+        	mPlayer.stop();
+        
         // Stop the simulation
         mGameView.stopGame();
 

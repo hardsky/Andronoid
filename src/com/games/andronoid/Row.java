@@ -60,7 +60,10 @@ public class Row{
 			{
 				if(brick.Intersect(oBall))
 				{
+					if(brick instanceof NosyBrick)
+						((NosyBrick) brick).Din();
 					mBricks.remove(brick);
+					
 					return true;					
 				}
 				

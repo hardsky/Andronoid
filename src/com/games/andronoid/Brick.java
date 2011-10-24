@@ -1,5 +1,6 @@
 package com.games.andronoid;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.*;
 import android.util.DisplayMetrics;
@@ -10,7 +11,8 @@ public class Brick extends Graphic {
 	public enum Type
 	{
 		green,
-		hole
+		hole,
+		nosy
 	}
 	
 	protected Brick()
@@ -36,7 +38,7 @@ public class Brick extends Graphic {
 		mDrawble.draw(canvas);
 	}
 
-	public static Brick Create(Type type, Resources rc) {
+	public static Brick Create(Context context, Type type, Resources rc) {
 		DisplayMetrics metrics = rc.getDisplayMetrics();
 		switch(type)
 		{
@@ -44,6 +46,8 @@ public class Brick extends Graphic {
 			return new Brick(rc.getDrawable(R.drawable.brick), metrics);
 		case hole:
 			return new Hole(metrics);
+		case nosy:
+			return new NosyBrick(context, rc.getDrawable(R.drawable.brick), metrics);
 		}
 		return null;
 	}
