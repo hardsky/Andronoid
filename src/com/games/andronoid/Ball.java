@@ -38,13 +38,13 @@ public class Ball extends Graphic {
 		}
 		else if(sDifficulty.equalsIgnoreCase("hard")){
 			
-			mVX = 0.1f;
-			mVY = 0.1f;
+			mVX = 0.02f;
+			mVY = 0.02f;
 		}
 		else{//normal
 			
-			mVX = 0.02f;
-			mVY = 0.02f;
+			mVX = 0.01f;
+			mVY = 0.01f;
 		}			
 	}
 

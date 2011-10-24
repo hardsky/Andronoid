@@ -13,14 +13,16 @@ public class World implements ISensorListener {
 	private String mDifficulty;
 	private int mFriction;
 	private Context mContext;
+	private Life mLife;
 
-	public World(Ball ball, Bite bite, Mosaic mosaic, String sDifficulty, int nFriction)
+	public World(Context context, Ball ball, Bite bite, Mosaic mosaic, String sDifficulty, int nFriction)
 	{
 		mBall = ball;
 		mBite = bite;
 		mMosaic = mosaic;	
 		mDifficulty = sDifficulty;
 		mFriction = nFriction;
+		mContext = context;
 	}
 	
 	public void Stop()
@@ -87,7 +89,7 @@ public class World implements ISensorListener {
 		float x = mField.exactCenterX();
 		mBite.setOrigin(x-mBite.getPlace().width()/2, height - mBite.getPlace().height() - 1);//bite on the bottom
 		mBall.setOrigin(x - mBall.getPlace().width()/2, mBite.getPlace().top - mBall.getPlace().height() - 1);
-		mMosaic.setOrigin(x - mMosaic.getPlace().width()/2, 1);		
+		mMosaic.setOrigin(x - mMosaic.getPlace().width()/2, 1 + 20);		
 	}
 
 	@Override

@@ -77,7 +77,7 @@ public class GameView extends View implements SensorEventListener{
 		Ball oBall = new Ball((BitmapDrawable) mRc.getDrawable(R.drawable.ball), mMetrics, mDifficulty);
 		Bite oBite = new NosyBite(mContext, (BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetrics, mFriction);
 		Mosaic oMosaic = Parser.CreateMosaic(mContext, mRc, mMosaicName);
-		return new World(oBall, oBite, oMosaic, mDifficulty, mFriction);
+		return new World(mContext, oBall, oBite, oMosaic, mDifficulty, mFriction);
 	}
 	
 	public void stopGame() {
