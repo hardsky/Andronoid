@@ -23,6 +23,7 @@ public class World implements ISensorListener {
 		mDifficulty = sDifficulty;
 		mFriction = nFriction;
 		mContext = context;
+		mLife = new Life(3, context.getResources());
 	}
 	
 	public void Stop()
@@ -44,8 +45,10 @@ public class World implements ISensorListener {
 	
 	public void Intersect(Ball ball)
 	{
-		if(ball.getPlace().bottom > mField.bottom)
+		if(ball.getPlace().bottom > mField.bottom){
 			LossBall();
+			mLife.Withdraw();
+		}
 		else if(ball.getPlace().top < mField.top)
 			ball.Impact(ImpactType.top, new Rect(0, 0, 1, mField.top - ball.getPlace().top));
 		else if(ball.getPlace().left < mField.left)
@@ -78,6 +81,7 @@ public class World implements ISensorListener {
 		mBall.Draw(canvas);
 		mBite.Draw(canvas);
 		mMosaic.Draw(canvas);
+		mLife.Draw(canvas);
 	}
 
 	public Bite getBite() {
@@ -89,7 +93,8 @@ public class World implements ISensorListener {
 		float x = mField.exactCenterX();
 		mBite.setOrigin(x-mBite.getPlace().width()/2, height - mBite.getPlace().height() - 1);//bite on the bottom
 		mBall.setOrigin(x - mBall.getPlace().width()/2, mBite.getPlace().top - mBall.getPlace().height() - 1);
-		mMosaic.setOrigin(x - mMosaic.getPlace().width()/2, 1 + 20);		
+		mMosaic.setOrigin(x - mMosaic.getPlace().width()/2, 1 + 20);
+		mLife.setOrigin();
 	}
 
 	@Override
