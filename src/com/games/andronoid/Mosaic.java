@@ -56,4 +56,11 @@ public class Mosaic{
 	public Rect getPlace() {
 		return mBounds;
 	}
+
+	public void setScoreHandler(Score score) {
+		for(Row row: mRows){
+			row.setScoreHandler(score);
+		}
+		
+	}
 }

@@ -1,7 +1,5 @@
 package com.games.andronoid;
 
-import com.example.android.apis.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -19,7 +17,7 @@ public class GameOverActivity extends Activity {
         // See assets/res/any/layout/translucent_background.xml for this
         // view layout definition, which is being set here as
         // the content of our screen.
-        setContentView(R.layout.translucent_background);
+        setContentView(R.layout.game_over_activity);
 	}
 
 }

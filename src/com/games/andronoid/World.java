@@ -14,16 +14,23 @@ public class World implements ISensorListener {
 	private int mFriction;
 	private Context mContext;
 	private Life mLife;
+	private Score mScore;
 
 	public World(Context context, Ball ball, Bite bite, Mosaic mosaic, String sDifficulty, int nFriction)
 	{
+		mScore = new Score(sDifficulty);
 		mBall = ball;
 		mBite = bite;
-		mMosaic = mosaic;	
+		mMosaic = mosaic;
+		
+		mMosaic.setScoreHandler(mScore);
+		
 		mDifficulty = sDifficulty;
 		mFriction = nFriction;
 		mContext = context;
-		mLife = new Life(3, context.getResources());
+		mLife = new Life(3, context);
+		
+		mLife.setScoreHandler(mScore);
 	}
 	
 	public void Stop()
@@ -82,6 +89,7 @@ public class World implements ISensorListener {
 		mBite.Draw(canvas);
 		mMosaic.Draw(canvas);
 		mLife.Draw(canvas);
+		mScore.Draw(canvas);
 	}
 
 	public Bite getBite() {

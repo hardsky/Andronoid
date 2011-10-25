@@ -2,6 +2,8 @@ package com.games.andronoid;
 
 import java.util.ArrayList;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -11,8 +13,12 @@ public class Life {
 	
 	private int mCount;
 	private ArrayList<Drawable> mLives; 
+	private Context mContext;
+	private Score mScore;
 	
-	public Life(int nCount, Resources rc){
+	public Life(int nCount, Context context){
+		mContext = context;
+		Resources rc = context.getResources();
 		mLives= new ArrayList<Drawable>(nCount);
 		mCount = nCount;
 		for(int i = 0; i < mCount; i++){
@@ -26,6 +32,13 @@ public class Life {
 	public void Withdraw(){
 		if(mLives.size() != 0)
 			mLives.remove(mLives.size() - 1);
+		
+		if(mLives.size() == 0){
+			Intent intent = new Intent(mContext, GameOverActivity.class);
+			mContext.startActivity(intent);
+		}
+			
+		mScore.Excite(ScoreType.loss);
 	}
 	
 	public void Draw(Canvas canvas){
@@ -44,6 +57,10 @@ public class Life {
 			bounds.offsetTo(x, 1);
 			heart.setBounds(bounds);
 		}		
+	}
+
+	public void setScoreHandler(Score score) {
+		mScore = score;
 	}
 			
 }

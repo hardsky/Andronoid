@@ -66,8 +66,11 @@ public class GameActivity extends Activity {
          * release our sensor resources and wake locks
          */
 
-        if(mPlayer != null)
+        if(mPlayer != null){
         	mPlayer.stop();
+        	mPlayer.release();
+        	mPlayer = null;
+        }
         
         // Stop the simulation
         mGameView.stopGame();
