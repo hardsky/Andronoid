@@ -5,7 +5,7 @@
   android:layout_height="fill_parent" android:orientation="vertical">
     <TextView  android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/txtHead" android:text="@string/choose_level_header" android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_marginBottom="40px"></TextView>
     <HorizontalScrollView android:id="@+id/hsv" android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
-        <LinearLayout android:id="@+id/ll" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_gravity="center" android:orientation="horizontal"></LinearLayout>
+        <LinearLayout android:id="@+id/ll" android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal" android:layout_gravity="left"></LinearLayout>
     </HorizontalScrollView>
     
 </LinearLayout>
