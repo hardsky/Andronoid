@@ -30,6 +30,8 @@ public class StageActivity extends Activity {
 				view.setText(getString(R.string.level) + " " + lv.getLevelName());
 				//view.setPadding(5, 5, 5, 5);
 				view.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+				view.setTag(lv.getMosaicName() + "," + st.getBackgroundImgFile() + "," + st.getMusic());
+				view.setOnClickListener(mClickListener);
 
 				ll.addView(view);
 				
