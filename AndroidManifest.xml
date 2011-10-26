@@ -12,6 +12,9 @@
         <activity android:name=".StageActivity"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="landscape">
         </activity>
+        <activity android:name=".GameOverActivity"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="landscape">
+        </activity>
         <activity android:name=".RulesActivity"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="portrait">
         </activity>
