@@ -59,9 +59,17 @@ public class StageView extends View {
 		mTextPaint.setTextAlign(Align.LEFT);
 		mTextPaint.setTextSize(20);
 		
-		mLock = mContext.getResources().getDrawable(R.drawable.lock);
-		mLock.setBounds(0, 0, 30, 30);
+		String sN = mContext.getResources().getResourceName(R.drawable.lock);
+		String sP = mContext.getResources().getResourcePackageName(R.drawable.lock);
+		String sT = mContext.getResources().getResourceTypeName(R.drawable.lock);
+		String sE = mContext.getResources().getResourceEntryName(R.drawable.lock);
+
+		int nI = mContext.getResources().getIdentifier(sE, sT, sP);
 		
+		mLock = mContext.getResources().getDrawable(R.drawable.lock);
+		mLock.setBounds(0, 0, 30, 30);	
+		
+		//this.setBackgroundResource(R.drawable.back_7);
 	}
 	
 	@Override
@@ -69,6 +77,7 @@ public class StageView extends View {
 		// TODO Auto-generated method stub
 		super.onDraw(canvas);
 		
+		/*
 		Paint paint = new Paint();
 		paint.setColor(Color.GREEN);
 		paint.setStyle(Style.STROKE);
@@ -84,6 +93,7 @@ public class StageView extends View {
 		mLock.setBounds(lockBounds);
 		
 		mLock.draw(canvas);
+		*/
 		
 		/*
 		Path textPath = new Path();
@@ -92,8 +102,27 @@ public class StageView extends View {
 		canvas.drawPath(textPath, textPaint);
 		*/
 		
-		int xOffset = (int)mTextPaint.measureText(mText);
-        canvas.drawText(mText, 120 /2 - xOffset / 2, 30, mTextPaint);
+		int padding = 10;
+		
+	    Path clipPath = new Path();
+	    int w = this.getWidth();
+	    int h = this.getHeight();
+	    clipPath.addRoundRect(new RectF(0 + padding, 0 + padding, w - padding, h - padding), 10.0f, 10.0f, Path.Direction.CW);
+	    canvas.clipPath(clipPath);
+	    
+	    Drawable bg = getResources().getDrawable(R.drawable.back_7);
+	    bg.setDither(true);
+	    bg.setFilterBitmap(true);
+	    bg.setBounds(0, 0, w, h);
+	    bg.draw(canvas);
+	    
+	    Rect lockBounds = mLock.getBounds();
+	    lockBounds.offsetTo((int)(w /2 - lockBounds.width() / 2), (int)(h * 0.3f + padding + 10));
+	    mLock.setBounds(lockBounds);
+	    mLock.draw(canvas);
+	    
+		int textWidth = (int)mTextPaint.measureText(mText);
+        canvas.drawText(mText, w /2 - textWidth / 2, h * 0.3f + padding, mTextPaint);
 	}
 	
     @Override
