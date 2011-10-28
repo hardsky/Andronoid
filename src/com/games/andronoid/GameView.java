@@ -63,13 +63,9 @@ public class GameView extends View implements SensorEventListener{
 		mWorld = CreateWorld();
 		
         mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
-		
-        try {
-			this.setBackgroundDrawable(new BitmapDrawable(mRc, mRc.getAssets().open(mBackGroundFile)));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		final int nId = mRc.getIdentifier(mBackGroundFile, AppConsts.DRAWABLE_TYPE, AppConsts.PACKAGE_NAME);
+		this.setBackgroundDrawable(mRc.getDrawable(nId));
 	}
 	
 	private World CreateWorld()

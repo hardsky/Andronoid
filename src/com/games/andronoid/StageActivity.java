@@ -14,7 +14,6 @@ public class StageActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.stage_layout);
 				
@@ -28,20 +27,12 @@ public class StageActivity extends Activity {
 				
 				StageView view = new StageView(this);
 				view.setText(getString(R.string.level) + " " + lv.getLevelName());
-				//view.setPadding(5, 5, 5, 5);
+				view.setBackgroundName(st.getBackgroundImgFile());
 				view.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 				view.setTag(lv.getMosaicName() + "," + st.getBackgroundImgFile() + "," + st.getMusic());
 				view.setOnClickListener(mClickListener);
 
-				ll.addView(view);
-				
-				/*
-				TextView txt = new TextView(getBaseContext());		
-				txt.append(getString(R.string.level) + " " + lv.getLevelName());
-				txt.setTag(lv.getMosaicName() + "," + st.getBackgroundImgFile() + "," + st.getMusic());
-				txt.setOnClickListener(mClickListener);
-				txt.setBackgroundResource(R.drawable.green);
-				*/
+				ll.addView(view);				
 			}
 		}		
 	}
