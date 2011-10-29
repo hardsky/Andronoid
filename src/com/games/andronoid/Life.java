@@ -9,14 +9,15 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
-public class Life {
+public class Life implements ISubject {
 	
 	private int mCount;
 	private ArrayList<Drawable> mLives; 
 	private Context mContext;
-	private Score mScore;
+	private ArrayList<IObserver> mObservers;
 	
 	public Life(int nCount, Context context){
+		mObservers = new ArrayList<IObserver>();
 		mContext = context;
 		Resources rc = context.getResources();
 		mLives= new ArrayList<Drawable>(nCount);
@@ -30,15 +31,16 @@ public class Life {
 	}
 	
 	public void Withdraw(){
+		NotifyObservers();
+		
 		if(mLives.size() != 0)
 			mLives.remove(mLives.size() - 1);
 		
 		if(mLives.size() == 0){
+			NotifyObservers();
 			Intent intent = new Intent(mContext, GameOverActivity.class);
 			mContext.startActivity(intent);
-		}
-			
-		mScore.Excite(ScoreType.loss);
+		}			
 	}
 	
 	public void Draw(Canvas canvas){
@@ -59,8 +61,29 @@ public class Life {
 		}		
 	}
 
-	public void setScoreHandler(Score score) {
-		mScore = score;
+	@Override
+	public void RegisterObserver(IObserver observer) {
+		mObservers.add(observer);
 	}
-			
+
+	@Override
+	public void RemoveObserver(IObserver observer) {
+		mObservers.remove(observer);
+	}
+
+	@Override
+	public void NotifyObservers() {
+		for(IObserver ob: mObservers)
+			ob.update(this);
+	}
+
+	@Override
+	public ScoreType getScoreType() {
+		return ScoreType.loss;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return mLives.size() == 0;
+	}			
 }

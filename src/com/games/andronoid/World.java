@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-public class World implements ISensorListener {
+public class World implements ISensorListener, IObserver {
 	
 	private Ball mBall;
 	private Bite mBite;
@@ -15,26 +15,34 @@ public class World implements ISensorListener {
 	private Context mContext;
 	private Life mLife;
 	private Score mScore;
+	private boolean mRunning;
 
 	public World(Context context, Ball ball, Bite bite, Mosaic mosaic, String sDifficulty, int nFriction)
 	{
-		mScore = new Score(sDifficulty);
-		mBall = ball;
-		mBite = bite;
-		mMosaic = mosaic;
-		
-		mMosaic.setScoreHandler(mScore);
-		
+		mRunning = true;
 		mDifficulty = sDifficulty;
 		mFriction = nFriction;
 		mContext = context;
-		mLife = new Life(3, context);
+		mBall = ball;
+		mBite = bite;
+		mMosaic = mosaic;		
+		mScore = new Score(sDifficulty);
 		
-		mLife.setScoreHandler(mScore);
+		mMosaic.RegisterObserver(mScore);
+		mMosaic.RegisterObserver(this);
+		
+		mLife = new Life(3, context);
+		mLife.RegisterObserver(mScore);		
+		mLife.RegisterObserver(this);		
 	}
 	
 	public void Stop()
 	{
+		mRunning = false;
+	}
+	
+	public boolean isRunning(){
+		return mRunning;
 	}
 		
 	private void ComputePhysics()
@@ -71,7 +79,6 @@ public class World implements ISensorListener {
 		mBite = new NosyBite(mContext, mBite, mFriction);
 		mBite.setOrigin(x-mBite.getPlace().width()/2, mField.height() - mBite.getPlace().height() - 1);//bite on the bottom
 		mBall.setOrigin(x - mBall.getPlace().width()/2, mBite.getPlace().top - mBall.getPlace().height() - 1);
-		//TODO: attach game play
 	}
 	private void Intersect(Bite bite) {
 		if(bite.getPlace().left < mField.left)
@@ -108,5 +115,11 @@ public class World implements ISensorListener {
 	@Override
 	public void onSensorChanged(float fSensorX, long eventTime, long cpuTime) {
 		mBite.onSensorChanged(fSensorX, eventTime, cpuTime);
+	}
+
+	@Override
+	public void update(ISubject subject) {
+		if(subject.isEmpty())
+			Stop();
 	}
 }

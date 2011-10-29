@@ -83,9 +83,11 @@ public class GameView extends View implements SensorEventListener{
 	
     @Override
     protected void onDraw(Canvas canvas) {
-    	mWorld.Draw(canvas);
-        // and make sure to redraw ASAP
-        invalidate();
+    	if(mWorld.isRunning()){
+	    	mWorld.Draw(canvas);
+	        // and make sure to redraw ASAP
+	        invalidate();
+    	}
     }
 
     @Override
@@ -132,5 +134,4 @@ public class GameView extends View implements SensorEventListener{
 
         mWorld.onSensorChanged(sensorX, event.timestamp, System.nanoTime());
 	}
-	
 }

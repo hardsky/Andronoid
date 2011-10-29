@@ -5,13 +5,17 @@ import java.util.*;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-public class Mosaic{
+public class Mosaic implements ISubject{
 	
 	private ArrayList<Row> mRows;
 	private Rect mBounds;
+	private ArrayList<IObserver> mObservers;
+	
 	public Mosaic()
 	{
 		mRows = new ArrayList<Row>();
+		mObservers = new ArrayList<IObserver>();
+		
 		//mBounds needed in getPlace
 		mBounds = new Rect(0, 0, 0, 0);
 	}
@@ -33,8 +37,10 @@ public class Mosaic{
 		{
 			for(Row row: mRows)
 			{
-				if(row.Intersect(oBall))
+				if(row.Intersect(oBall)){
+					NotifyObservers();
 					break;			
+				}
 			}
 		}
 	}
@@ -57,10 +63,34 @@ public class Mosaic{
 		return mBounds;
 	}
 
-	public void setScoreHandler(Score score) {
-		for(Row row: mRows){
-			row.setScoreHandler(score);
+	@Override
+	public void RegisterObserver(IObserver observer) {
+		mObservers.add(observer);
+	}
+
+	@Override
+	public void RemoveObserver(IObserver observer) {
+		mObservers.remove(observer);
+	}
+
+	@Override
+	public void NotifyObservers() {
+		for(IObserver ob: mObservers){
+			ob.update(this);
 		}
+	}
+
+	@Override
+	public ScoreType getScoreType() {
+		return ScoreType.brick;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		for(Row row: mRows)
+			if(row.isEmpty())
+				return true;
 		
+		return false;
 	}
 }

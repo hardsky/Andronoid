@@ -10,7 +10,6 @@ public class Row{
 	private ArrayList<Brick> mBricks;
 	private Rect mBounds;
 	private ArrayList<IBounds> mBoundHandlers;
-	private Score mScore;
 	
 	public Row()
 	{
@@ -63,7 +62,6 @@ public class Row{
 				{
 					if(brick instanceof NosyBrick)
 						((NosyBrick) brick).Din();
-					mScore.Excite(ScoreType.brick);
 					mBricks.remove(brick);
 					
 					return true;					
@@ -74,8 +72,8 @@ public class Row{
 		
 		return false;
 	}
-
-	public void setScoreHandler(Score score) {
-		mScore = score;
+	
+	public boolean isEmpty(){
+		return mBricks.size() == 0;
 	}
 }
