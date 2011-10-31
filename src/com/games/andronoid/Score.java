@@ -30,22 +30,22 @@ public class Score implements IObserver {
 	public void update(ISubject subject) {
 		
 		int nExchange = 0;
-		if(mDifficulty.equalsIgnoreCase("easy")){
+		if(mDifficulty.equalsIgnoreCase(DifficaltyType.EASY)){
 			nExchange = 100;
 		}
-		else if(mDifficulty.equalsIgnoreCase("normal")){
+		else if(mDifficulty.equalsIgnoreCase(DifficaltyType.NORMAL)){
 			nExchange = 200;
 		}
 		else{
 			nExchange = 300;
 		}
 		
-		switch(subject.getScoreType())
+		switch(subject.getState())
 		{
 		case brick:
 			mScore += nExchange;
 			break;
-		case loss:
+		case life:
 			mScore -= nExchange;
 			break;
 		}

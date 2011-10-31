@@ -2,7 +2,6 @@ package com.games.andronoid;
 
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.DisplayMetrics;
 
 public class Bite extends Graphic implements ISensorListener {
 	private long mLastT = 0;
@@ -14,9 +13,9 @@ public class Bite extends Graphic implements ISensorListener {
 	private float mAccelX = 0;
 	private float mFriction = 0.3f;
 
-	public Bite(BitmapDrawable oBite, DisplayMetrics metrics, int nFriction)
+	public Bite(BitmapDrawable oBite, float metersToPixelsX, float metersToPixelsY, int nFriction)
 	{
-		super(oBite, metrics, 0.01f, 0.002f);		
+		super(oBite, metersToPixelsX, metersToPixelsY, 0.01f, 0.002f);		
 		mFriction = nFriction / 100f;
 	}
 		

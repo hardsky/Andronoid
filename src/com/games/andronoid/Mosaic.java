@@ -5,19 +5,15 @@ import java.util.*;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-public class Mosaic implements ISubject{
+public class Mosaic{
 	
 	private ArrayList<Row> mRows;
 	private Rect mBounds;
-	private ArrayList<IObserver> mObservers;
 	
-	public Mosaic()
-	{
-		mRows = new ArrayList<Row>();
-		mObservers = new ArrayList<IObserver>();
+	public Mosaic(){
 		
-		//mBounds needed in getPlace
-		mBounds = new Rect(0, 0, 0, 0);
+		mRows = new ArrayList<Row>();			
+		mBounds = new Rect(0, 0, 0, 0);//mBounds needed in getPlace
 	}
 	
 	public void addRow(Row row)
@@ -31,66 +27,45 @@ public class Mosaic implements ISubject{
 		mRows.add(row);
 	}
 		
-	public void Intersect(Ball oBall) {
+	public boolean Intersect(Ball oBall) {
+		
 		Rect oBallBounds = oBall.getPlace();
 		if(Rect.intersects(oBallBounds, mBounds))
-		{
 			for(Row row: mRows)
-			{
 				if(row.Intersect(oBall)){
-					NotifyObservers();
-					break;			
+				
+					if(row.isEmpty())
+						mRows.remove(row);
+					
+					return true;
 				}
-			}
-		}
+		
+		return false;
 	}
 
 	public void setOrigin(float left, float top) {//temporary, that place this more proper
+		
 		mBounds.offsetTo((int)left, (int)top);
-		for(Row row: mRows)
-		{
+		for(Row row: mRows){
+			
 			row.setOrigin(left, top);			
 			top += row.getPlace().height() + 1;						
 		}
 	}
 
 	public void Draw(Canvas canvas) {
+		
 		for(Row row: mRows)
 			row.Draw(canvas);
 	}
 	
 	public Rect getPlace() {
+		
 		return mBounds;
 	}
 
-	@Override
-	public void RegisterObserver(IObserver observer) {
-		mObservers.add(observer);
-	}
-
-	@Override
-	public void RemoveObserver(IObserver observer) {
-		mObservers.remove(observer);
-	}
-
-	@Override
-	public void NotifyObservers() {
-		for(IObserver ob: mObservers){
-			ob.update(this);
-		}
-	}
-
-	@Override
-	public ScoreType getScoreType() {
-		return ScoreType.brick;
-	}
-
-	@Override
 	public boolean isEmpty() {
-		for(Row row: mRows)
-			if(row.isEmpty())
-				return true;
-		
-		return false;
+
+		return mRows.isEmpty();
 	}
 }

@@ -10,21 +10,26 @@ public class Row{
 	private ArrayList<Brick> mBricks;
 	private Rect mBounds;
 	private ArrayList<IBounds> mBoundHandlers;
+	private int mRealBricksCnt = 0;
 	
-	public Row()
-	{
+	public Row(){
+		
 		mBricks = new ArrayList<Brick>();
 		mBoundHandlers = new ArrayList<IBounds>();
 		//mBounds needed in getPlace
 		mBounds = new Rect(0, 0, 0, 0);
 	}
 	
-	public void AddBoundHandler(IBounds handler)
-	{
+	public void AddBoundHandler(IBounds handler){
+		
 		mBoundHandlers.add(handler);
 	}
 	
 	public void addBrick(Brick brick) {
+		
+		if(brick instanceof NosyBrick)
+			mRealBricksCnt++;
+		
 		mBricks.add(brick);
 		brick.setOrigin(mBounds.right + 1, mBounds.top);
 		mBounds.union(brick.getPlace());
@@ -42,8 +47,7 @@ public class Row{
 		//mBounds needed in getPlace
 		mBounds.offsetTo((int)left, (int)top);
 		
-		for(Brick brick: mBricks)
-		{
+		for(Brick brick: mBricks){
 			brick.setOrigin(left, top);			
 			left += brick.getPlace().width() + 1;			
 		}
@@ -54,26 +58,24 @@ public class Row{
 	}
 
 	public boolean Intersect(Ball oBall) {
+		
 		if(Rect.intersects(oBall.getPlace(), getPlace()))
-		{
 			for(Brick brick: mBricks)
-			{
-				if(brick.Intersect(oBall))
-				{
+				if(brick.Intersect(oBall)){
+					
 					if(brick instanceof NosyBrick)
 						((NosyBrick) brick).Din();
 					mBricks.remove(brick);
+					mRealBricksCnt--;
 					
 					return true;					
 				}
-				
-			}
-		}
 		
 		return false;
 	}
 	
 	public boolean isEmpty(){
-		return mBricks.size() == 0;
+		
+		return !(mRealBricksCnt > 0);
 	}
 }

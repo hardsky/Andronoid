@@ -1,15 +1,23 @@
 package com.games.andronoid;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.preference.PreferenceManager;
 
 public class GameActivity extends Activity {
+	
+	public final class ParamKeys{
+		
+		static public final String Mosaic = "com.games.andronoid.mosaic";
+		static public final String Background = "com.games.andronoid.background";
+		static public final String Music = "com.games.andronoid.music";
+		static public final String NextLevel = "com.games.andronoid.next_level";
+		
+		private ParamKeys(){}
+	}
+	
 	
     private PowerManager mPowerManager;
     private WakeLock mWakeLock;
@@ -26,57 +34,49 @@ public class GameActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        
         mPowerManager = (PowerManager) getSystemService(POWER_SERVICE);
         mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, getClass()
                 .getName());
-        
-        Intent inte = getIntent();
-        Bundle bn = inte.getExtras();
-        
-        String sMosaicName = (String)bn.get("com.games.andronoid.mosaic");
-        String sBackGroundFile = (String)bn.get("com.games.andronoid.background");
-        String sMusicFile = (String)bn.get("com.games.andronoid.music");
-        
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        
-        int nFriction = settings.getInt("friction", 30);
-        int nMass = settings.getInt("mass", 50);
-        boolean bMusic = settings.getBoolean("music", true);
-        String sDifficulty = settings.getString("difficulty", "normal"); 
-        
-        mGameView = new GameView(this, sMosaicName, sBackGroundFile, sMusicFile, nFriction, nMass, bMusic, sDifficulty);
-        setContentView(mGameView);
         mWakeLock.acquire();
-        if(bMusic){
-	        mPlayer = MediaPlayer.create(this, R.raw.andronoid);        
-	        mPlayer.setLooping(true);
-	        mPlayer.start();
+        
+        GameSettings settings = new GameSettings(this);                
+        mGameView = new GameView(this, settings);        
+        setContentView(mGameView);
+        mGameView.startGame();
+        
+        if(settings.isMusicOn()){
+	        mPlayer = createMusicPlayer(settings.getMusicFile());
         }
         else{
         	mPlayer = null;
-        }
-		mGameView.startGame();
+        }		
     }
-
+    
     @Override
     protected void onPause() {
         super.onPause();
-        /*
-         * When the activity is paused, we make sure to stop the simulation,
-         * release our sensor resources and wake locks
-         */
 
+        mGameView.stopGame();
+        mWakeLock.release();        
+        releaseMusicPlayer();
+    }
+    
+    private MediaPlayer createMusicPlayer(String sMusicFile){
+    	
+    	MediaPlayer player = MediaPlayer.create(this, R.raw.andronoid);        
+    	player.setLooping(true);
+    	player.start();
+    	
+    	return player;
+    }
+    
+    private void releaseMusicPlayer(){
+    	
         if(mPlayer != null){
         	mPlayer.stop();
         	mPlayer.release();
         	mPlayer = null;
-        }
-        
-        // Stop the simulation
-        mGameView.stopGame();
-
-        // and release our wake-lock
-        mWakeLock.release();
-    }
-    
+        }    	
+    }    
 }

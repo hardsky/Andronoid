@@ -1,44 +1,84 @@
 package com.games.andronoid;
 
+import java.util.ArrayList;
+
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.Surface;
+import android.view.WindowManager;
 
-public class World implements ISensorListener, IObserver {
+public class World implements SensorEventListener, ISubject {
 	
 	private Ball mBall;
 	private Bite mBite;
 	private Mosaic mMosaic;
 	private Rect mField;
-	private String mDifficulty;
-	private int mFriction;
 	private Context mContext;
 	private Life mLife;
 	private Score mScore;
 	private boolean mRunning;
-
-	public World(Context context, Ball ball, Bite bite, Mosaic mosaic, String sDifficulty, int nFriction)
+		
+	private ArrayList<IObserver> mObservers;
+	
+	private Display mDisplay;
+	private SensorManager mSensorManager;
+	private Sensor mAccelerometer;
+	private Resources mRc;
+	
+	private GameSettings mSettings;
+	
+	private WorldType mState = WorldType.none;
+	
+	protected float mMetersToPixelsX;
+	protected float mMetersToPixelsY;
+	
+	public World(GameView gameView, GameSettings settings)
 	{
-		mRunning = true;
-		mDifficulty = sDifficulty;
-		mFriction = nFriction;
-		mContext = context;
-		mBall = ball;
-		mBite = bite;
-		mMosaic = mosaic;		
-		mScore = new Score(sDifficulty);
+		mSettings = settings;
+		mObservers = new ArrayList<IObserver>();
+		mContext = gameView.getContext();
+		mScore = new Score(mSettings.getDifficulty());		
+		mLife = new Life(3, mContext);
+	
+		WindowManager windowManager = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
+        mDisplay = windowManager.getDefaultDisplay();		
+        mSensorManager  = (SensorManager)mContext.getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer  = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        DisplayMetrics metrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+        mRc = mContext.getResources();
 		
-		mMosaic.RegisterObserver(mScore);
-		mMosaic.RegisterObserver(this);
+		mMetersToPixelsX = metrics.xdpi / 0.0254f;
+		mMetersToPixelsY = metrics.ydpi / 0.0254f;	
+        
+		mBall = new Ball((BitmapDrawable) mRc.getDrawable(R.drawable.ball), mMetersToPixelsX, mMetersToPixelsY, mSettings.getDifficulty());
+		mBite = new NosyBite(mContext, (BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetersToPixelsX, mMetersToPixelsY, mSettings.getFriction());
+		mMosaic = Parser.CreateMosaic(mContext, mRc, mSettings.getMosaicName(), mMetersToPixelsX, mMetersToPixelsY);
 		
-		mLife = new Life(3, context);
-		mLife.RegisterObserver(mScore);		
-		mLife.RegisterObserver(this);		
+		RegisterObserver(mScore);
+		RegisterObserver(mLife);
+		RegisterObserver(gameView);
 	}
 	
-	public void Stop()
-	{
+	public void Start(){
+		
+		mRunning = true;
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);		
+	}
+	
+	public void Stop(){
+		
 		mRunning = false;
+        mSensorManager.unregisterListener(this);
 	}
 	
 	public boolean isRunning(){
@@ -52,17 +92,32 @@ public class World implements ISensorListener, IObserver {
 		mBite.setCurrentTime(nCurrentTimeStamp);
 		
 		if(!mBite.Intesect(mBall))
-			mMosaic.Intersect(mBall);				
+			if(mMosaic.Intersect(mBall)){
+				mState = WorldType.brick;
+				NotifyObservers();
+				
+				if(mMosaic.isEmpty()){
+					mState = WorldType.win;
+					NotifyObservers();
+				}
+			}
+				
 		
 		Intersect(mBall);
 		Intersect(mBite);
 	}
-	
-	public void Intersect(Ball ball)
+		
+	private void Intersect(Ball ball)
 	{
 		if(ball.getPlace().bottom > mField.bottom){
 			LossBall();
-			mLife.Withdraw();
+			mState = WorldType.life;
+			NotifyObservers();
+			
+			if(mLife.isEmpty()){
+				mState = WorldType.over;
+				NotifyObservers();
+			}				
 		}
 		else if(ball.getPlace().top < mField.top)
 			ball.Impact(ImpactType.top, new Rect(0, 0, 1, mField.top - ball.getPlace().top));
@@ -75,8 +130,8 @@ public class World implements ISensorListener, IObserver {
 	private void LossBall()
 	{
 		float x = mField.exactCenterX();
-		mBall = new Ball(mBall, mDifficulty);
-		mBite = new NosyBite(mContext, mBite, mFriction);
+		mBall = new Ball(mBall, mSettings.getDifficulty());
+		mBite = new NosyBite(mContext, mBite, mSettings.getFriction());
 		mBite.setOrigin(x-mBite.getPlace().width()/2, mField.height() - mBite.getPlace().height() - 1);//bite on the bottom
 		mBall.setOrigin(x - mBall.getPlace().width()/2, mBite.getPlace().top - mBall.getPlace().height() - 1);
 	}
@@ -113,13 +168,65 @@ public class World implements ISensorListener, IObserver {
 	}
 
 	@Override
-	public void onSensorChanged(float fSensorX, long eventTime, long cpuTime) {
-		mBite.onSensorChanged(fSensorX, eventTime, cpuTime);
+	public void RegisterObserver(IObserver observer) {
+		mObservers.add(observer);
 	}
 
 	@Override
-	public void update(ISubject subject) {
-		if(subject.isEmpty())
-			Stop();
+	public void RemoveObserver(IObserver observer) {
+		mObservers.remove(observer);
 	}
+
+	@Override
+	public void NotifyObservers() {
+		for(IObserver ob: mObservers){
+			ob.update(this);
+		}
+		
+		mState = WorldType.none;
+	}
+
+	@Override
+	public WorldType getState() {
+		return mState;
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		
+		if(event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
+			return;
+		
+        /*
+         * record the accelerometer data, the event's timestamp as well as
+         * the current time. The latter is needed so we can calculate the
+         * "present" time during rendering. In this application, we need to
+         * take into account how the screen is rotated with respect to the
+         * sensors (which always return data in a coordinate space aligned
+         * to with the screen in its native orientation).
+         */
+
+        float sensorX = 0;
+        switch (mDisplay.getOrientation()) {
+            case Surface.ROTATION_0:
+            	sensorX = event.values[0];
+			break;
+            case Surface.ROTATION_90:
+            	sensorX = -event.values[1];
+			break;
+            case Surface.ROTATION_180:
+            	sensorX = -event.values[0];
+			break;
+            case Surface.ROTATION_270:
+            	sensorX = event.values[1];
+			break;
+        }
+        
+        mBite.onSensorChanged(sensorX, event.timestamp, System.nanoTime());		
+	}	
 }

@@ -3,7 +3,6 @@ package com.games.andronoid;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.*;
-import android.util.DisplayMetrics;
 
 public class Graphic {
 	protected Drawable mDrawble;
@@ -40,12 +39,12 @@ public class Graphic {
 		return mDrawble;
 	}
 
-	public Graphic(Drawable oDrawble, DisplayMetrics metrics, float widthMeters, float heightMeters)	
+	public Graphic(Drawable oDrawble, float metersToPixelsX, float metersToPixelsY, float widthMeters, float heightMeters)	
 	{
 		mDrawble = oDrawble;
 		
-		mMetersToPixelsX = metrics.xdpi / 0.0254f;
-		mMetersToPixelsY = metrics.ydpi / 0.0254f;	
+		mMetersToPixelsX = metersToPixelsX;
+		mMetersToPixelsY = metersToPixelsY;	
 		
 		mDrawble.setBounds(0, 0, (int)(widthMeters * mMetersToPixelsX), (int)(heightMeters * mMetersToPixelsY));
 		mBounds = mDrawble.copyBounds();		

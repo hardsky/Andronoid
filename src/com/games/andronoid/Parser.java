@@ -59,10 +59,12 @@ public class Parser {
         return gl;		
 	}
 
-	public static Mosaic CreateMosaic(Context context, Resources rc, String name)
-	{
+	public static Mosaic CreateMosaic(Context context, Resources rc, String name, float metersToPixelsX, float metersToPixelsY){
+		
 		Mosaic mosaic = new Mosaic();
+		
         try {
+        	
         	XmlPullParserFactory factory = XmlPullParserFactory.newInstance ();
         	XmlPullParser parser = factory.newPullParser();
         	parser.setInput(rc.getAssets().open(name), "utf-8");
@@ -70,30 +72,23 @@ public class Parser {
 				
 			String tagName = null;
 			Row row = null;
-			while(eventType != XmlResourceParser.END_DOCUMENT)
-			{
-				if(eventType == XmlResourceParser.START_TAG)
-				{
+			while(eventType != XmlResourceParser.END_DOCUMENT){
+				
+				if(eventType == XmlResourceParser.START_TAG){
+					
 					tagName = parser.getName();
-					if(tagName.equalsIgnoreCase("row"))
-					{
+					if(tagName.equalsIgnoreCase("row")){
 						row = new Row();
 						mosaic.addRow(row);
 					}
 					else if(tagName.equalsIgnoreCase("hole"))
-					{
-						row.addBrick(Brick.Create(context, Brick.Type.hole, rc));
-					}
+						row.addBrick(Brick.Create(context, Brick.Type.hole, rc, metersToPixelsX, metersToPixelsY));
 					else if(tagName.equalsIgnoreCase("green"))
-					{
-						//row.addBrick(Brick.Create(context, Brick.Type.green, rc));
-						row.addBrick(Brick.Create(context, Brick.Type.nosy, rc));
-					}
+						row.addBrick(Brick.Create(context, Brick.Type.nosy, rc, metersToPixelsX, metersToPixelsY));
 				}
 				
-					eventType = parser.next();
-				
-			}
+				eventType = parser.next();				
+			}			
 		} catch (XmlPullParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

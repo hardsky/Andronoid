@@ -3,22 +3,17 @@ package com.games.andronoid;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
-public class Life implements ISubject {
+public class Life implements IObserver{
 	
 	private int mCount;
 	private ArrayList<Drawable> mLives; 
-	private Context mContext;
-	private ArrayList<IObserver> mObservers;
 	
 	public Life(int nCount, Context context){
-		mObservers = new ArrayList<IObserver>();
-		mContext = context;
 		Resources rc = context.getResources();
 		mLives= new ArrayList<Drawable>(nCount);
 		mCount = nCount;
@@ -30,19 +25,12 @@ public class Life implements ISubject {
 			heart.setBounds(0, 0, 20, 20);
 	}
 	
-	public void Withdraw(){
-		NotifyObservers();
+	private void Withdraw(){
 		
 		if(mLives.size() != 0)
-			mLives.remove(mLives.size() - 1);
-		
-		if(mLives.size() == 0){
-			NotifyObservers();
-			Intent intent = new Intent(mContext, GameOverActivity.class);
-			mContext.startActivity(intent);
-		}			
+			mLives.remove(mLives.size() - 1);		
 	}
-	
+		
 	public void Draw(Canvas canvas){
 		for(Drawable heart: mLives)
 			heart.draw(canvas);
@@ -61,29 +49,13 @@ public class Life implements ISubject {
 		}		
 	}
 
-	@Override
-	public void RegisterObserver(IObserver observer) {
-		mObservers.add(observer);
-	}
-
-	@Override
-	public void RemoveObserver(IObserver observer) {
-		mObservers.remove(observer);
-	}
-
-	@Override
-	public void NotifyObservers() {
-		for(IObserver ob: mObservers)
-			ob.update(this);
-	}
-
-	@Override
-	public ScoreType getScoreType() {
-		return ScoreType.loss;
-	}
-
-	@Override
 	public boolean isEmpty() {
 		return mLives.size() == 0;
+	}
+
+	@Override
+	public void update(ISubject subject) {
+		if(subject.getState() == WorldType.life)
+			Withdraw();
 	}			
 }

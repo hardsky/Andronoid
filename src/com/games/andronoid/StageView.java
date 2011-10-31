@@ -15,6 +15,11 @@ import android.view.View;
 
 public class StageView extends View {
 
+	private String mMosaicName;
+	private String mBackgroundFile;
+	private String mMusicFile;
+	private String mNextLevel;
+	
 	private Context mContext;
 	
 	private String mText;
@@ -23,12 +28,24 @@ public class StageView extends View {
 	private Drawable mLock;
 	private Drawable mBack;
 
+	private boolean mLocked;
+	
+	private String mLevelName;
+
+    public String getLevelName() {
+		return mLevelName;
+	}
+
+	public void setLevelName(String mLevelName) {
+		this.mLevelName = mLevelName;
+	}
+	
 	public StageView(Context context) {
 		super(context);
 		mContext = context;
 	}
 	
-    public StageView(Context context, AttributeSet attrs, int defStyle) {
+	public StageView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		mContext = context;
 	}
@@ -38,6 +55,14 @@ public class StageView extends View {
 		mContext = context;
 	}
 
+	public void setLock(boolean locked){
+		mLocked = locked;
+	}
+	
+	public boolean isLocked() {
+		return mLocked;
+	}
+	
 	public void setText(String text){
 		mText = text;
 		
@@ -47,12 +72,7 @@ public class StageView extends View {
 		mTextPaint.setTextAlign(Align.LEFT);
 		mTextPaint.setTextSize(20);				
 	}
-	
-	public void setBackgroundName(String name){
-		int nId = mContext.getResources().getIdentifier(name, AppConsts.DRAWABLE_TYPE, AppConsts.PACKAGE_NAME);
-		mBack = mContext.getResources().getDrawable(nId);
-	}
-	
+		
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -70,12 +90,14 @@ public class StageView extends View {
 	    mBack.setBounds(0, 0, w, h);
 	    mBack.draw(canvas);
 	    
-		mLock = mContext.getResources().getDrawable(R.drawable.lock);
-		mLock.setBounds(0, 0, 30, 30);	    
-	    Rect lockBounds = mLock.getBounds();
-	    lockBounds.offsetTo((int)(w /2 - lockBounds.width() / 2), (int)(h * 0.3f + padding + 10));
-	    mLock.setBounds(lockBounds);
-	    mLock.draw(canvas);
+	    if(mLocked){
+			mLock = mContext.getResources().getDrawable(R.drawable.lock);
+			mLock.setBounds(0, 0, 30, 30);	    
+		    Rect lockBounds = mLock.getBounds();
+		    lockBounds.offsetTo((int)(w /2 - lockBounds.width() / 2), (int)(h * 0.3f + padding + 10));
+		    mLock.setBounds(lockBounds);
+		    mLock.draw(canvas);
+	    }
 	    
 		int textWidth = (int)mTextPaint.measureText(mText);
         canvas.drawText(mText, w /2 - textWidth / 2, h * 0.3f + padding, mTextPaint);
@@ -84,5 +106,43 @@ public class StageView extends View {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		setMeasuredDimension(120, 100);	
+	}
+
+	public String getMosaicName() {
+		return mMosaicName;
+	}
+
+	public void setMosaicName(String mMosaicName) {
+		this.mMosaicName = mMosaicName;
+	}
+
+	public String getBackgroundFile() {
+		return mBackgroundFile;
+	}
+
+	public void setBackgroundName(String sBackgroundFile){
+		mBackgroundFile = sBackgroundFile;
+		int nId = mContext.getResources().getIdentifier(mBackgroundFile, AppConsts.DRAWABLE_TYPE, AppConsts.PACKAGE_NAME);
+		mBack = mContext.getResources().getDrawable(nId);
+	}
+	
+	public void setBackgroundFile(String mBackgroundFile) {
+		this.mBackgroundFile = mBackgroundFile;
+	}
+
+	public String getMusicFile() {
+		return mMusicFile;
+	}
+
+	public void setMusicFile(String mMusicFile) {
+		this.mMusicFile = mMusicFile;
+	}
+
+	public String getNextLevel() {
+		return mNextLevel;
+	}
+
+	public void setNextLevel(String mNextLevel) {
+		this.mNextLevel = mNextLevel;
 	}	
 }

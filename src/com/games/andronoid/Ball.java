@@ -2,7 +2,6 @@ package com.games.andronoid;
 
 import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.DisplayMetrics;
 
 public class Ball extends Graphic {
 
@@ -10,42 +9,14 @@ public class Ball extends Graphic {
 	private float mVY;
 	private long mLastT;
 	private float mLastDeltaT;
-	public Ball(BitmapDrawable oBall, DisplayMetrics metrics, String sDifficulty) {
-		super(oBall, metrics, 0.002f, 0.002f);
-		if(sDifficulty.equalsIgnoreCase("easy")){
-			
-			mVX = 0.005f;
-			mVY = 0.005f;
-		}
-		else if(sDifficulty.equalsIgnoreCase("hard")){
-			
-			mVX = 0.1f;
-			mVY = 0.1f;
-		}
-		else{//normal
-			
-			mVX = 0.02f;
-			mVY = 0.02f;
-		}			
+	public Ball(BitmapDrawable oBall, float metersToPixelsX, float metersToPixelsY, String sDifficulty) {
+		super(oBall, metersToPixelsX, metersToPixelsY, 0.002f, 0.002f);		
+		setVelocity(sDifficulty);
 	}
 
 	public Ball(Ball lostBall, String sDifficulty) {
-		super(lostBall);
-		if(sDifficulty.equalsIgnoreCase("easy")){
-			
-			mVX = 0.005f;
-			mVY = 0.005f;
-		}
-		else if(sDifficulty.equalsIgnoreCase("hard")){
-			
-			mVX = 0.02f;
-			mVY = 0.02f;
-		}
-		else{//normal
-			
-			mVX = 0.01f;
-			mVY = 0.01f;
-		}			
+		super(lostBall);		
+		setVelocity(sDifficulty);
 	}
 
 	public void Impact(ImpactType enType, Rect oIntersect) {
@@ -172,5 +143,23 @@ public class Ball extends Graphic {
 
 		return true;
 	}
-
+	
+	private void setVelocity(String sDifficulty){
+		
+		if(sDifficulty.equalsIgnoreCase("easy")){
+			
+			mVX = 0.005f;
+			mVY = 0.005f;
+		}
+		else if(sDifficulty.equalsIgnoreCase("hard")){
+			
+			mVX = 0.02f;
+			mVY = 0.02f;
+		}
+		else{//normal
+			
+			mVX = 0.01f;
+			mVY = 0.01f;
+		}		
+	}	
 }

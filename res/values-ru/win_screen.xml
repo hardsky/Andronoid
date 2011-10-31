@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="win_head">Вы выиграли!</string>
+    <string name="win_next">Перейти к следующему уровню &gt;&gt;</string>
+    
+</resources>

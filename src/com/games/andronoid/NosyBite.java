@@ -4,14 +4,13 @@ import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.util.DisplayMetrics;
 
 public class NosyBite extends Bite {
 
 	private Context mContext;
 	
-	public NosyBite(Context context, BitmapDrawable oBite, DisplayMetrics metrics, int nFriction) {
-		super(oBite, metrics, nFriction);
+	public NosyBite(Context context, BitmapDrawable oBite, float metersToPixelsX, float metersToPixelsY, int nFriction) {
+		super(oBite, metersToPixelsX, metersToPixelsY, nFriction);
 		
 		mContext = context;
 	}

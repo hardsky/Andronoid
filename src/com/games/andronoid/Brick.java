@@ -3,7 +3,6 @@ package com.games.andronoid;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.*;
-import android.util.DisplayMetrics;
 import android.graphics.drawable.Drawable;
 
 public class Brick extends Graphic {
@@ -20,9 +19,9 @@ public class Brick extends Graphic {
 		
 	}
 	
-	public Brick(Drawable oBrick, DisplayMetrics metrics)
+	public Brick(Drawable oBrick, float metersToPixelsX, float metersToPixelsY)
 	{
-		super(oBrick, metrics, 0.01f, 0.005f);
+		super(oBrick, metersToPixelsX, metersToPixelsY, 0.01f, 0.005f);
 	}
 	
 	@Override
@@ -38,16 +37,15 @@ public class Brick extends Graphic {
 		mDrawble.draw(canvas);
 	}
 
-	public static Brick Create(Context context, Type type, Resources rc) {
-		DisplayMetrics metrics = rc.getDisplayMetrics();
+	public static Brick Create(Context context, Type type, Resources rc, float metersToPixelsX, float metersToPixelsY) {
 		switch(type)
 		{
 		case green:
-			return new Brick(rc.getDrawable(R.drawable.brick), metrics);
+			return new Brick(rc.getDrawable(R.drawable.brick), metersToPixelsX, metersToPixelsY);
 		case hole:
-			return new Hole(metrics);
+			return new Hole(metersToPixelsX, metersToPixelsY);
 		case nosy:
-			return new NosyBrick(context, rc.getDrawable(R.drawable.brick), metrics);
+			return new NosyBrick(context, rc.getDrawable(R.drawable.brick), metersToPixelsX, metersToPixelsY);
 		}
 		return null;
 	}
