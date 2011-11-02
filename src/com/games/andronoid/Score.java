@@ -30,10 +30,10 @@ public class Score implements IObserver {
 	public void update(ISubject subject) {
 		
 		int nExchange = 0;
-		if(mDifficulty.equalsIgnoreCase(DifficaltyType.EASY)){
+		if(mDifficulty.equalsIgnoreCase(DifficultyType.EASY)){
 			nExchange = 100;
 		}
-		else if(mDifficulty.equalsIgnoreCase(DifficaltyType.NORMAL)){
+		else if(mDifficulty.equalsIgnoreCase(DifficultyType.NORMAL)){
 			nExchange = 200;
 		}
 		else{

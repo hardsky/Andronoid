@@ -31,7 +31,7 @@ public final class GameSettings {
         setFriction(settings.getInt(PreferenceKeys.FRICTION, 30));
         setMass(settings.getInt(PreferenceKeys.MASS, 50));
         setMusicOn(settings.getBoolean(PreferenceKeys.MUSIC, true));
-        setDifficulty(settings.getString(PreferenceKeys.DIFFICALTY, DifficaltyType.NORMAL)); 
+        setDifficulty(settings.getString(PreferenceKeys.DIFFICALTY, DifficultyType.NORMAL)); 
 		
 	}
 
