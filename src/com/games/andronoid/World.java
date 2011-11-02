@@ -38,8 +38,8 @@ public class World implements SensorEventListener, ISubject {
 	
 	private WorldType mState = WorldType.none;
 	
-	protected float mMetersToPixelsX;
-	protected float mMetersToPixelsY;
+	private float mMetersToPixelsX;
+	private float mMetersToPixelsY;
 	
 	public World(GameView gameView, GameSettings settings)
 	{
