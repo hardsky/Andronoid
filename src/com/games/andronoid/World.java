@@ -41,8 +41,11 @@ public class World implements SensorEventListener, ISubject {
 	private float mMetersToPixelsX;
 	private float mMetersToPixelsY;
 	
+	private GameTime mGameTime;
+	
 	public World(GameView gameView, GameSettings settings)
 	{
+		mGameTime = new GameTime();
 		mSettings = settings;
 		mObservers = new ArrayList<IObserver>();
 		mContext = gameView.getContext();
@@ -72,13 +75,15 @@ public class World implements SensorEventListener, ISubject {
 	public void Start(){
 		
 		mRunning = true;
-        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);		
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+        mGameTime.Start();
 	}
 	
 	public void Stop(){
 		
 		mRunning = false;
         mSensorManager.unregisterListener(this);
+        mGameTime.Stop();
 	}
 	
 	public boolean isRunning(){
@@ -152,6 +157,7 @@ public class World implements SensorEventListener, ISubject {
 		mMosaic.Draw(canvas);
 		mLife.Draw(canvas);
 		mScore.Draw(canvas);
+		mGameTime.Draw(canvas);
 	}
 
 	public Bite getBite() {
@@ -164,7 +170,10 @@ public class World implements SensorEventListener, ISubject {
 		mBite.setOrigin(x-mBite.getPlace().width()/2, height - mBite.getPlace().height() - 1);//bite on the bottom
 		mBall.setOrigin(x - mBall.getPlace().width()/2, mBite.getPlace().top - mBall.getPlace().height() - 1);
 		mMosaic.setOrigin(x - mMosaic.getPlace().width()/2, 1 + 20);
-		mLife.setOrigin();
+		
+		mLife.setOrigin(0, 1);
+		mScore.setOrigin(100, 18);
+		mGameTime.setOrigin(160, 18);
 	}
 
 	@Override

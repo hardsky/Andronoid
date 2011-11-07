@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
     <RelativeLayout android:id="@+id/relativeLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+        
+        <com.games.andronoid.GameStatistic
+            andronoid:id="@+id/stat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+        
         <TextView android:layout_width="wrap_content" 
         android:textAppearance="?android:attr/textAppearanceLarge" 
         android:id="@+id/textView1" 
         android:layout_height="wrap_content" 
         android:text="@string/win_head" 
         android:layout_marginTop="72dp" 
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+         />
         <TextView android:layout_width="wrap_content" 
         android:textAppearance="?android:attr/textAppearanceLarge" 
         android:id="@+id/txtWinNext" 

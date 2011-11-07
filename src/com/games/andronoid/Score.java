@@ -9,6 +9,14 @@ public class Score implements IObserver {
 	
 	private String mDifficulty;
 	private int mScore = 0;
+	private int mLeft;
+	private int mTop;
+	
+	public Score Clone(){
+		Score clone = new Score(mDifficulty);
+		clone.mScore = mScore;
+		return clone;
+	}
 	
 	public int getScore() {
 		return mScore;
@@ -18,14 +26,20 @@ public class Score implements IObserver {
 		mDifficulty = sDifficulty;
 	}
 	
+	public void setOrigin(int left, int top){
+		mLeft = left;
+		mTop = top;
+	}
+	
 	public void Draw(Canvas canvas){
 		Paint paint = new Paint(); 
 		paint.setColor(Color.WHITE); 
 		paint.setStyle(Style.FILL); 
-		paint.setTextSize(20); 
-		canvas.drawText(String.valueOf(this.getScore()), 100, 20, paint);		
+		paint.setTextSize(20);
+		String sTxt = String.valueOf(this.getScore());
+		canvas.drawText(sTxt, mLeft, mTop, paint);		
 	}
-
+	
 	@Override
 	public void update(ISubject subject) {
 		

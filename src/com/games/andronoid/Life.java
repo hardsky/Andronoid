@@ -11,9 +11,15 @@ import android.graphics.drawable.Drawable;
 public class Life implements IObserver{
 	
 	private int mCount;
-	private ArrayList<Drawable> mLives; 
+	private ArrayList<Drawable> mLives;
+	private Context mContext;
+	
+	public Life Clone(){
+		return new Life(mCount, mContext);
+	}
 	
 	public Life(int nCount, Context context){
+		mContext = context;
 		Resources rc = context.getResources();
 		mLives= new ArrayList<Drawable>(nCount);
 		mCount = nCount;
@@ -36,19 +42,19 @@ public class Life implements IObserver{
 			heart.draw(canvas);
 	}
 	
-	public void setOrigin(){
-		int x = 0;
+	public void setOrigin(int left, int top){
+		int x = left;
 		int nSpace = 5;
 		Rect bounds;
 		for(Drawable heart: mLives){
 			bounds = heart.copyBounds();
 			x += heart.getBounds().width();
 			x += nSpace;
-			bounds.offsetTo(x, 1);
+			bounds.offsetTo(x, top);
 			heart.setBounds(bounds);
 		}		
 	}
-
+	
 	public boolean isEmpty() {
 		return mLives.size() == 0;
 	}
