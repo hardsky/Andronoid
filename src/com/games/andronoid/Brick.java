@@ -41,11 +41,11 @@ public class Brick extends Graphic {
 		switch(type)
 		{
 		case green:
-			return new Brick(rc.getDrawable(R.drawable.brick), metersToPixelsX, metersToPixelsY);
+			return new Brick(rc.getDrawable(R.drawable.green), metersToPixelsX, metersToPixelsY);
 		case hole:
 			return new Hole(metersToPixelsX, metersToPixelsY);
 		case nosy:
-			return new NosyBrick(context, rc.getDrawable(R.drawable.brick), metersToPixelsX, metersToPixelsY);
+			return new NosyBrick(context, rc.getDrawable(R.drawable.green), metersToPixelsX, metersToPixelsY);
 		}
 		return null;
 	}

@@ -34,7 +34,8 @@ public class LevelLock {
 		}
 		else{
 			//did not set locks before
-			mNewLocks.add(sLevelName);//here collect lvl names for update locks in settings
+			if(mFirstLvlProcessed)
+				mNewLocks.add(sLevelName);//here collect lvl names for update locks in settings
 			boolean lock = mFirstLvlProcessed;
 			mFirstLvlProcessed = true;
 			return lock;			
