@@ -56,6 +56,9 @@ public class GameView extends View implements IObserver{
 		stopGame();
 		Intent intent = new Intent(getContext(), WinActivity.class);
 		intent.putExtra(WinActivity.ParamKeys.NextLevel, mSettings.getNextLevel());
+		intent.putExtra(WinActivity.ParamKeys.Life, mWorld.getLife());
+		intent.putExtra(WinActivity.ParamKeys.Score, mWorld.getScore());
+		intent.putExtra(WinActivity.ParamKeys.Time, mWorld.getSeconds());
 		getContext().startActivity(intent);
 	}
 

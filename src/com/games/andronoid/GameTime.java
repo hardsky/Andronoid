@@ -84,5 +84,9 @@ public class GameTime {
 		paint.setStyle(Style.FILL); 
 		paint.setTextSize(20); 
 		canvas.drawText(toString(), mLeft, mTop, paint);		
-	}	
+	}
+	
+	public int getSeconds(){
+		return (int)(mCurrentTime - mStartedTime);
+	}
 }

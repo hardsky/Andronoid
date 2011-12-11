@@ -11,6 +11,9 @@ public class WinActivity extends Activity implements OnClickListener {
 	public final class ParamKeys{
 		
 		static public final String NextLevel = "com.games.andronoid.next_level";
+		static public final String Life = "life";
+		static public final String Score = "score";
+		static public final String Time = "time";
 		
 		private ParamKeys(){}
 	}
@@ -26,6 +29,9 @@ public class WinActivity extends Activity implements OnClickListener {
         LevelLock oLock = new LevelLock(this);
         oLock.unlockLevel(mNextLevel);
 		
+        int nLife = intent.getExtras().getInt(ParamKeys.Life);
+        int nScore = intent.getExtras().getInt(ParamKeys.Score);
+        int nSeconds = intent.getExtras().getInt(ParamKeys.Time);
 		
 		setContentView(R.layout.game_win_layout);
 		

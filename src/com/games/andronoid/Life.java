@@ -63,5 +63,9 @@ public class Life implements IObserver{
 	public void update(ISubject subject) {
 		if(subject.getState() == WorldType.life)
 			Withdraw();
-	}			
+	}
+	
+	public int getLife(){
+		return mLives.size();
+	}
 }

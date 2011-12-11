@@ -237,5 +237,17 @@ public class World implements SensorEventListener, ISubject {
         }
         
         mBite.onSensorChanged(sensorX, event.timestamp, System.nanoTime());		
-	}	
+	}
+	
+	public int getScore(){
+		return mScore.getScore();
+	}
+	
+	public int getLife(){
+		return mLife.getLife();
+	}
+	
+	public int getSeconds(){
+		return mGameTime.getSeconds();
+	}
 }
