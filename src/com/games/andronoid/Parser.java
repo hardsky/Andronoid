@@ -84,7 +84,17 @@ public class Parser {
 					else if(tagName.equalsIgnoreCase("hole"))
 						row.addBrick(Brick.Create(context, Brick.Type.hole, rc, metersToPixelsX, metersToPixelsY));
 					else if(tagName.equalsIgnoreCase("green"))
-						row.addBrick(Brick.Create(context, Brick.Type.nosy, rc, metersToPixelsX, metersToPixelsY));
+						row.addBrick(Brick.Create(context, Brick.Type.green, rc, metersToPixelsX, metersToPixelsY));
+					else if(tagName.equalsIgnoreCase("blue"))
+						row.addBrick(Brick.Create(context, Brick.Type.blue, rc, metersToPixelsX, metersToPixelsY));
+					else if(tagName.equalsIgnoreCase("pink"))
+						row.addBrick(Brick.Create(context, Brick.Type.pink, rc, metersToPixelsX, metersToPixelsY));
+					else if(tagName.equalsIgnoreCase("red"))
+						row.addBrick(Brick.Create(context, Brick.Type.red, rc, metersToPixelsX, metersToPixelsY));
+					else if(tagName.equalsIgnoreCase("sea"))
+						row.addBrick(Brick.Create(context, Brick.Type.sea, rc, metersToPixelsX, metersToPixelsY));
+					else if(tagName.equalsIgnoreCase("yellow"))
+						row.addBrick(Brick.Create(context, Brick.Type.yellow, rc, metersToPixelsX, metersToPixelsY));
 				}
 				
 				eventType = parser.next();				

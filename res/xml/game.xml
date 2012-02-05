@@ -4,30 +4,30 @@
     <mosaic name="mosaic1.xml" level="1" />
   </stage>
   <stage id="1" background="back_2" music="" >
-    <mosaic name="mosaic1.xml" level="2" />
+    <mosaic name="mosaic2.xml" level="2" />
   </stage>
   <stage id="1" background="back_3" music="" >
-    <mosaic name="mosaic1.xml" level="3" />
+    <mosaic name="mosaic3.xml" level="3" />
   </stage>
   <stage id="1" background="back_4" music="" >
-    <mosaic name="mosaic1.xml" level="4" />
+    <mosaic name="mosaic4.xml" level="4" />
   </stage>
   <stage id="1" background="back_5" music="" >
-    <mosaic name="mosaic1.xml" level="5" />
+    <mosaic name="mosaic5.xml" level="5" />
   </stage>
   <stage id="1" background="back_6" music="" >
-    <mosaic name="mosaic1.xml" level="6" />
+    <mosaic name="mosaic6.xml" level="6" />
   </stage>
   <stage id="1" background="back_7" music="" >
-    <mosaic name="mosaic1.xml" level="7" />
+    <mosaic name="mosaic7.xml" level="7" />
   </stage>
   <stage id="1" background="back_8" music="" >
-    <mosaic name="mosaic1.xml" level="8" />
+    <mosaic name="mosaic8.xml" level="8" />
   </stage>
   <stage id="1" background="back_9" music="" >
-    <mosaic name="mosaic1.xml" level="9" />
+    <mosaic name="mosaic9.xml" level="9" />
   </stage>
   <stage id="1" background="back_10" music="" >
-    <mosaic name="mosaic1.xml" level="10" />
+    <mosaic name="mosaic10.xml" level="10" />
   </stage>
 </game>
