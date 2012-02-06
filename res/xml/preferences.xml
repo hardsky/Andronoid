@@ -3,10 +3,12 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res/com.games.andronoid">
     <PreferenceCategory
-        android:title="@string/hdSound">
+        android:title="@string/hdMusic">
         <CheckBoxPreference android:title="@string/ch_enabled" android:key="music" android:defaultValue="@bool/music_enable"></CheckBoxPreference>
         </PreferenceCategory>
-    <PreferenceCategory
+    <PreferenceCategory android:title="@string/hdSound">
+        <CheckBoxPreference android:key="sound" android:title="@string/ch_enabled" android:defaultValue="@bool/sound_enable" />
+    </PreferenceCategory><PreferenceCategory
         android:title="@string/hdControls">
 		<com.games.andronoid.SeekBarPreference
 		android:title="@string/friction" 
@@ -24,4 +26,5 @@
         android:title="@string/lst_difficulty" 
         android:key="difficulty"></ListPreference>
         </PreferenceCategory>
+    
 </PreferenceScreen>

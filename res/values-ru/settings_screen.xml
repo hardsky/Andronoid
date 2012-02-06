@@ -8,5 +8,6 @@
     <string name="ch_enabled">Включить</string>
     <string name="lst_difficulty">Сложность</string>
     <string name="kg">кг.</string>
+    <string name="hdMusic">Музыка</string>
     
 </resources>

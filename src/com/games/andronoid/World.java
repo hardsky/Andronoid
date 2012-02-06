@@ -64,8 +64,9 @@ public class World implements SensorEventListener, ISubject {
 		mMetersToPixelsY = metrics.ydpi / 0.0254f;	
         
 		mBall = new Ball((BitmapDrawable) mRc.getDrawable(R.drawable.ball), mMetersToPixelsX, mMetersToPixelsY, mSettings.getDifficulty());
-		mBite = new NosyBite(mContext, (BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetersToPixelsX, mMetersToPixelsY, mSettings.getFriction());
-		mMosaic = Parser.CreateMosaic(mContext, mRc, mSettings.getMosaicName(), mMetersToPixelsX, mMetersToPixelsY);
+		mBite = mSettings.isSoundOn() ? new NosyBite(mContext, (BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetersToPixelsX, mMetersToPixelsY, mSettings.getFriction())
+									: new Bite((BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetersToPixelsX, mMetersToPixelsY, mSettings.getFriction());
+		mMosaic = Parser.CreateMosaic(mContext, mRc, mSettings, mMetersToPixelsX, mMetersToPixelsY);
 		
 		RegisterObserver(mScore);
 		RegisterObserver(mLife);

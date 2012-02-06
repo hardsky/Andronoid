@@ -59,8 +59,10 @@ public class Parser {
         return gl;		
 	}
 
-	public static Mosaic CreateMosaic(Context context, Resources rc, String name, float metersToPixelsX, float metersToPixelsY){
+	public static Mosaic CreateMosaic(Context context, Resources rc, GameSettings settings, float metersToPixelsX, float metersToPixelsY){
 		
+		String name = settings.getMosaicName();
+		boolean bIsSoundOn = settings.isSoundOn();
 		Mosaic mosaic = new Mosaic();
 		
         try {
@@ -82,19 +84,19 @@ public class Parser {
 						mosaic.addRow(row);
 					}
 					else if(tagName.equalsIgnoreCase("hole"))
-						row.addBrick(Brick.Create(context, Brick.Type.hole, rc, metersToPixelsX, metersToPixelsY));
+						row.addBrick(Brick.Create(context, Brick.Type.hole, rc, metersToPixelsX, metersToPixelsY, bIsSoundOn));
 					else if(tagName.equalsIgnoreCase("green"))
-						row.addBrick(Brick.Create(context, Brick.Type.green, rc, metersToPixelsX, metersToPixelsY));
+						row.addBrick(Brick.Create(context, Brick.Type.green, rc, metersToPixelsX, metersToPixelsY, bIsSoundOn));
 					else if(tagName.equalsIgnoreCase("blue"))
-						row.addBrick(Brick.Create(context, Brick.Type.blue, rc, metersToPixelsX, metersToPixelsY));
+						row.addBrick(Brick.Create(context, Brick.Type.blue, rc, metersToPixelsX, metersToPixelsY, bIsSoundOn));
 					else if(tagName.equalsIgnoreCase("pink"))
-						row.addBrick(Brick.Create(context, Brick.Type.pink, rc, metersToPixelsX, metersToPixelsY));
+						row.addBrick(Brick.Create(context, Brick.Type.pink, rc, metersToPixelsX, metersToPixelsY, bIsSoundOn));
 					else if(tagName.equalsIgnoreCase("red"))
-						row.addBrick(Brick.Create(context, Brick.Type.red, rc, metersToPixelsX, metersToPixelsY));
+						row.addBrick(Brick.Create(context, Brick.Type.red, rc, metersToPixelsX, metersToPixelsY, bIsSoundOn));
 					else if(tagName.equalsIgnoreCase("sea"))
-						row.addBrick(Brick.Create(context, Brick.Type.sea, rc, metersToPixelsX, metersToPixelsY));
+						row.addBrick(Brick.Create(context, Brick.Type.sea, rc, metersToPixelsX, metersToPixelsY, bIsSoundOn));
 					else if(tagName.equalsIgnoreCase("yellow"))
-						row.addBrick(Brick.Create(context, Brick.Type.yellow, rc, metersToPixelsX, metersToPixelsY));
+						row.addBrick(Brick.Create(context, Brick.Type.yellow, rc, metersToPixelsX, metersToPixelsY, bIsSoundOn));
 				}
 				
 				eventType = parser.next();				

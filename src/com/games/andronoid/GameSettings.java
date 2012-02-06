@@ -15,6 +15,7 @@ public final class GameSettings {
 	private int mMass;
 	private boolean mMusicOn;
 	private String mDifficulty;
+	private boolean mSoundOn;
 
 	public GameSettings(GameActivity activity){
 		
@@ -31,6 +32,7 @@ public final class GameSettings {
         setFriction(settings.getInt(PreferenceKeys.FRICTION, 30));
         setMass(settings.getInt(PreferenceKeys.MASS, 50));
         setMusicOn(settings.getBoolean(PreferenceKeys.MUSIC, true));
+        setSoundOn(settings.getBoolean(PreferenceKeys.SOUND, true));
         setDifficulty(settings.getString(PreferenceKeys.DIFFICALTY, DifficultyType.NORMAL)); 
 		
 	}
@@ -91,6 +93,14 @@ public final class GameSettings {
 		this.mMusicOn = mMusicOn;
 	}
 
+	public boolean isSoundOn() {
+		return mSoundOn;
+	}
+	
+	public void setSoundOn(boolean bSound) {
+		this.mSoundOn = bSound;
+	}
+	
 	public String getDifficulty() {
 		return mDifficulty;
 	}

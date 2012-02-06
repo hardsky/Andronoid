@@ -41,21 +41,27 @@ public class Brick extends Graphic {
 		mDrawble.draw(canvas);
 	}
 
-	public static Brick Create(Context context, Type type, Resources rc, float metersToPixelsX, float metersToPixelsY) {
+	public static Brick Create(Context context, Type type, Resources rc, float metersToPixelsX, float metersToPixelsY, boolean isSoundOn) {
 		switch(type)
 		{
 		case green:
-			return new NosyBrick(context, rc.getDrawable(R.drawable.green), metersToPixelsX, metersToPixelsY);
+			return isSoundOn ? new NosyBrick(context, rc.getDrawable(R.drawable.green), metersToPixelsX, metersToPixelsY)
+			: new Brick(rc.getDrawable(R.drawable.green), metersToPixelsX, metersToPixelsY);
 		case blue:
-			return new NosyBrick(context, rc.getDrawable(R.drawable.blue), metersToPixelsX, metersToPixelsY);
+			return isSoundOn ? new NosyBrick(context, rc.getDrawable(R.drawable.blue), metersToPixelsX, metersToPixelsY)
+			: new Brick(rc.getDrawable(R.drawable.blue), metersToPixelsX, metersToPixelsY);
 		case pink:
-			return new NosyBrick(context, rc.getDrawable(R.drawable.pink), metersToPixelsX, metersToPixelsY);
+			return isSoundOn ? new NosyBrick(context, rc.getDrawable(R.drawable.pink), metersToPixelsX, metersToPixelsY)
+			: new Brick(rc.getDrawable(R.drawable.pink), metersToPixelsX, metersToPixelsY);
 		case red:
-			return new NosyBrick(context, rc.getDrawable(R.drawable.red), metersToPixelsX, metersToPixelsY);
+			return isSoundOn ? new NosyBrick(context, rc.getDrawable(R.drawable.red), metersToPixelsX, metersToPixelsY)
+			: new Brick(rc.getDrawable(R.drawable.red), metersToPixelsX, metersToPixelsY);
 		case sea:
-			return new NosyBrick(context, rc.getDrawable(R.drawable.sea), metersToPixelsX, metersToPixelsY);
+			return isSoundOn ? new NosyBrick(context, rc.getDrawable(R.drawable.sea), metersToPixelsX, metersToPixelsY)
+			: new Brick(rc.getDrawable(R.drawable.sea), metersToPixelsX, metersToPixelsY);
 		case yellow:
-			return new NosyBrick(context, rc.getDrawable(R.drawable.yellow), metersToPixelsX, metersToPixelsY);
+			return isSoundOn ? new NosyBrick(context, rc.getDrawable(R.drawable.yellow), metersToPixelsX, metersToPixelsY)
+			: new Brick(rc.getDrawable(R.drawable.yellow), metersToPixelsX, metersToPixelsY);
 		case hole:
 			return new Hole(metersToPixelsX, metersToPixelsY);
 		}
