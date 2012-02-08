@@ -7,10 +7,12 @@ import android.graphics.Paint.Style;
 
 public class Score implements IObserver {
 	
-	private String mDifficulty;
+	//private String mDifficulty;
 	private int mScore = 0;
 	private int mLeft;
 	private int mTop;
+	int mExchange;
+	private String mDifficulty = DifficultyType.NORMAL;
 	
 	public Score Clone(){
 		Score clone = new Score(mDifficulty);
@@ -24,6 +26,15 @@ public class Score implements IObserver {
 
 	public Score(String sDifficulty){
 		mDifficulty = sDifficulty;
+		if(sDifficulty.equalsIgnoreCase(DifficultyType.EASY)){
+			mExchange = 100;
+		}
+		else if(sDifficulty.equalsIgnoreCase(DifficultyType.NORMAL)){
+			mExchange = 200;
+		}
+		else{
+			mExchange = 300;
+		}
 	}
 	
 	public void setOrigin(int left, int top){
@@ -43,25 +54,9 @@ public class Score implements IObserver {
 	@Override
 	public void update(ISubject subject) {
 		
-		int nExchange = 0;
-		if(mDifficulty.equalsIgnoreCase(DifficultyType.EASY)){
-			nExchange = 100;
-		}
-		else if(mDifficulty.equalsIgnoreCase(DifficultyType.NORMAL)){
-			nExchange = 200;
-		}
-		else{
-			nExchange = 300;
-		}
-		
-		switch(subject.getState())
-		{
-		case brick:
-			mScore += nExchange;
-			break;
-		case life:
-			mScore -= nExchange;
-			break;
-		}
+		if(subject instanceof Mosaic)
+			mScore += mExchange;
+		else if(subject instanceof Life)
+			mScore -= mExchange;
 	}
 }

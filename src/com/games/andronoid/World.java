@@ -1,7 +1,5 @@
 package com.games.andronoid;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -16,7 +14,7 @@ import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
 
-public class World implements SensorEventListener, ISubject {
+public class World implements SensorEventListener {
 	
 	private Ball mBall;
 	private Bite mBite;
@@ -27,50 +25,54 @@ public class World implements SensorEventListener, ISubject {
 	private Score mScore;
 	private boolean mRunning;
 		
-	private ArrayList<IObserver> mObservers;
-	
 	private Display mDisplay;
 	private SensorManager mSensorManager;
 	private Sensor mAccelerometer;
 	private Resources mRc;
 	
 	private GameSettings mSettings;
-	
-	private WorldType mState = WorldType.none;
-	
+		
 	private float mMetersToPixelsX;
 	private float mMetersToPixelsY;
 	
 	private GameTime mGameTime;
 	
-	public World(GameView gameView, GameSettings settings)
+	public World(Context oContext, GamePlay oGamePlay, GameSettings settings)
 	{
 		mGameTime = new GameTime();
 		mSettings = settings;
-		mObservers = new ArrayList<IObserver>();
-		mContext = gameView.getContext();
+		mContext = oContext;
 		mScore = new Score(mSettings.getDifficulty());		
-		mLife = new Life(3, mContext);
+		mLife = new Life(3, oContext);
 	
-		WindowManager windowManager = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
+		WindowManager windowManager = (WindowManager)oContext.getSystemService(Context.WINDOW_SERVICE);
         mDisplay = windowManager.getDefaultDisplay();		
-        mSensorManager  = (SensorManager)mContext.getSystemService(Context.SENSOR_SERVICE);
+        mSensorManager  = (SensorManager)oContext.getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer  = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         DisplayMetrics metrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(metrics);
-        mRc = mContext.getResources();
+        mRc = oContext.getResources();
 		
 		mMetersToPixelsX = metrics.xdpi / 0.0254f;
 		mMetersToPixelsY = metrics.ydpi / 0.0254f;	
         
 		mBall = new Ball((BitmapDrawable) mRc.getDrawable(R.drawable.ball), mMetersToPixelsX, mMetersToPixelsY, mSettings.getDifficulty());
-		mBite = mSettings.isSoundOn() ? new NosyBite(mContext, (BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetersToPixelsX, mMetersToPixelsY, mSettings.getFriction())
-									: new Bite((BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetersToPixelsX, mMetersToPixelsY, mSettings.getFriction());
-		mMosaic = Parser.CreateMosaic(mContext, mRc, mSettings, mMetersToPixelsX, mMetersToPixelsY);
+		mBite = new Bite((BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetersToPixelsX, mMetersToPixelsY, mSettings.getFriction());
+		mMosaic = Parser.CreateMosaic(oContext, mRc, mSettings, mMetersToPixelsX, mMetersToPixelsY);
+				
+		//bite impacts ball
+		if(mSettings.isSoundOn())
+			mBite.RegisterObserver(new Sound(oContext, R.raw.impact));
 		
-		RegisterObserver(mScore);
-		RegisterObserver(mLife);
-		RegisterObserver(gameView);
+		//brick is crashed
+		if(mSettings.isSoundOn())
+			mMosaic.RegisterObserver(new Sound(oContext, R.raw.kick));
+		mMosaic.RegisterObserver(mScore);
+		mMosaic.RegisterObserver(oGamePlay);
+		
+		//life is withdraw
+		mLife.RegisterObserver(mScore);
+		mLife.RegisterObserver(oGamePlay);
 	}
 	
 	public void Start(){
@@ -85,6 +87,10 @@ public class World implements SensorEventListener, ISubject {
 		mRunning = false;
         mSensorManager.unregisterListener(this);
         mGameTime.Stop();
+        
+        mBite.ClearObservers();
+        mMosaic.ClearObservers();
+        mLife.ClearObservers();
 	}
 	
 	public boolean isRunning(){
@@ -98,16 +104,7 @@ public class World implements SensorEventListener, ISubject {
 		mBite.setCurrentTime(nCurrentTimeStamp);
 		
 		if(!mBite.Intesect(mBall))
-			if(mMosaic.Intersect(mBall)){
-				mState = WorldType.brick;
-				NotifyObservers();
-				
-				if(mMosaic.isEmpty()){
-					mState = WorldType.win;
-					NotifyObservers();
-				}
-			}
-				
+			mMosaic.Intersect(mBall);
 		
 		Intersect(mBall);
 		Intersect(mBite);
@@ -117,13 +114,6 @@ public class World implements SensorEventListener, ISubject {
 	{
 		if(ball.getPlace().bottom > mField.bottom){
 			LossBall();
-			mState = WorldType.life;
-			NotifyObservers();
-			
-			if(mLife.isEmpty()){
-				mState = WorldType.over;
-				NotifyObservers();
-			}				
 		}
 		else if(ball.getPlace().top < mField.top)
 			ball.Impact(ImpactType.top, new Rect(0, 0, 1, mField.top - ball.getPlace().top));
@@ -135,9 +125,14 @@ public class World implements SensorEventListener, ISubject {
 	
 	private void LossBall()
 	{
+		mLife.Withdraw();
+		
 		float x = mField.exactCenterX();
 		mBall = new Ball(mBall, mSettings.getDifficulty());
-		mBite = new NosyBite(mContext, mBite, mSettings.getFriction());
+		mBite.ClearObservers();
+		mBite = new Bite(mBite, mSettings.getFriction());
+		if(mSettings.isSoundOn())
+			mBite.RegisterObserver(new Sound(mContext, R.raw.impact));
 		mBite.setOrigin(x-mBite.getPlace().width()/2, mField.height() - mBite.getPlace().height() - 1);//bite on the bottom
 		mBall.setOrigin(x - mBall.getPlace().width()/2, mBite.getPlace().top - mBall.getPlace().height() - 1);
 	}
@@ -175,30 +170,6 @@ public class World implements SensorEventListener, ISubject {
 		mLife.setOrigin(0, 1);
 		mScore.setOrigin(100, 18);
 		mGameTime.setOrigin(160, 18);
-	}
-
-	@Override
-	public void RegisterObserver(IObserver observer) {
-		mObservers.add(observer);
-	}
-
-	@Override
-	public void RemoveObserver(IObserver observer) {
-		mObservers.remove(observer);
-	}
-
-	@Override
-	public void NotifyObservers() {
-		for(IObserver ob: mObservers){
-			ob.update(this);
-		}
-		
-		mState = WorldType.none;
-	}
-
-	@Override
-	public WorldType getState() {
-		return mState;
 	}
 
 	@Override

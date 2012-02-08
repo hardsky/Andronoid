@@ -5,5 +5,5 @@ public interface ISubject {
 	void RemoveObserver(IObserver observer);
 	void NotifyObservers();
 
-	WorldType getState();
+	int getState();
 }

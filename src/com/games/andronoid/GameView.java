@@ -9,17 +9,20 @@ public class GameView extends View implements IObserver{
 
 	private World mWorld;	
 	private GameSettings mSettings;
+	private GamePlay mGamePlay;
 
 	public GameView(Context context, GameSettings settings) {
 		super(context);
 		
-		mSettings = settings;		
+		mSettings = settings;	
+		mGamePlay = new GamePlay();
 	}
 
 
 	public void startGame(){
-		
-		mWorld = new World(this, mSettings);
+		mGamePlay.Reset();
+		mGamePlay.RegisterObserver(this);
+		mWorld = new World(getContext(), mGamePlay, mSettings);
 		
 		final int nId = getResources().getIdentifier(mSettings.getBackgroundFile(), AppConsts.DRAWABLE_TYPE, AppConsts.PACKAGE_NAME);
 		this.setBackgroundDrawable(getResources().getDrawable(nId));
@@ -64,14 +67,10 @@ public class GameView extends View implements IObserver{
 
 	@Override
 	public void update(ISubject subject) {
-		switch(subject.getState())
-		{
-		case win:
+		GamePlay oGamePlay = (GamePlay)subject;
+		if(oGamePlay.isWin())
 			Win();
-			break;
-		case over:
+		else if(oGamePlay.isOver())
 			GameOver();
-			break;
-		}
 	}
 }

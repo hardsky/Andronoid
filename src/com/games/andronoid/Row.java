@@ -27,7 +27,7 @@ public class Row{
 	
 	public void addBrick(Brick brick) {
 		
-		if(brick instanceof NosyBrick)
+		if(!(brick instanceof Hole))
 			mRealBricksCnt++;
 		
 		mBricks.add(brick);
@@ -63,8 +63,6 @@ public class Row{
 			for(Brick brick: mBricks)
 				if(brick.Intersect(oBall)){
 					
-					if(brick instanceof NosyBrick)
-						((NosyBrick) brick).Din();
 					mBricks.remove(brick);
 					mRealBricksCnt--;
 					

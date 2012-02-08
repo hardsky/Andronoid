@@ -3,7 +3,9 @@
       package="com.games.andronoid"
       android:versionCode="1"
       android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="7" />
+    <uses-sdk android:minSdkVersion="4" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".GameActivity"
@@ -12,7 +14,7 @@
         <activity android:name=".StageActivity"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".GameOverActivity"
+        <activity android:noHistory="true" android:name=".GameOverActivity"
                   android:screenOrientation="landscape" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
         </activity>
         <activity android:name=".RulesActivity"
@@ -27,9 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER"></category>
             </intent-filter>
         </activity>
-        <activity android:screenOrientation="landscape" android:name=".WinActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"></activity>
-
-    </application>
-	<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission><uses-permission android:name="android.permission.VIBRATE"></uses-permission>	
-	
+        <activity android:noHistory="true" android:screenOrientation="landscape" android:name=".WinActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"></activity>        
+    </application>	
 </manifest>

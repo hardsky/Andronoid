@@ -42,8 +42,10 @@ public class WinActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		Intent intent = new Intent(this, StageActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra(StageActivity.ParamKeys.StartLevel, mNextLevel);
-		startActivity(intent);		
+		startActivity(intent);
+		finish();
 	}
 
 }

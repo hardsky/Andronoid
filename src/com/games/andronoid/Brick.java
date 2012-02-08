@@ -5,7 +5,7 @@ import android.content.res.Resources;
 import android.graphics.*;
 import android.graphics.drawable.Drawable;
 
-public class Brick extends Graphic {
+public class Brick extends GraphicSubj {
 
 	public enum Type
 	{
@@ -45,23 +45,17 @@ public class Brick extends Graphic {
 		switch(type)
 		{
 		case green:
-			return isSoundOn ? new NosyBrick(context, rc.getDrawable(R.drawable.green), metersToPixelsX, metersToPixelsY)
-			: new Brick(rc.getDrawable(R.drawable.green), metersToPixelsX, metersToPixelsY);
+			return new Brick(rc.getDrawable(R.drawable.green), metersToPixelsX, metersToPixelsY);
 		case blue:
-			return isSoundOn ? new NosyBrick(context, rc.getDrawable(R.drawable.blue), metersToPixelsX, metersToPixelsY)
-			: new Brick(rc.getDrawable(R.drawable.blue), metersToPixelsX, metersToPixelsY);
+			return new Brick(rc.getDrawable(R.drawable.blue), metersToPixelsX, metersToPixelsY);
 		case pink:
-			return isSoundOn ? new NosyBrick(context, rc.getDrawable(R.drawable.pink), metersToPixelsX, metersToPixelsY)
-			: new Brick(rc.getDrawable(R.drawable.pink), metersToPixelsX, metersToPixelsY);
+			return new Brick(rc.getDrawable(R.drawable.pink), metersToPixelsX, metersToPixelsY);
 		case red:
-			return isSoundOn ? new NosyBrick(context, rc.getDrawable(R.drawable.red), metersToPixelsX, metersToPixelsY)
-			: new Brick(rc.getDrawable(R.drawable.red), metersToPixelsX, metersToPixelsY);
+			return new Brick(rc.getDrawable(R.drawable.red), metersToPixelsX, metersToPixelsY);
 		case sea:
-			return isSoundOn ? new NosyBrick(context, rc.getDrawable(R.drawable.sea), metersToPixelsX, metersToPixelsY)
-			: new Brick(rc.getDrawable(R.drawable.sea), metersToPixelsX, metersToPixelsY);
+			return new Brick(rc.getDrawable(R.drawable.sea), metersToPixelsX, metersToPixelsY);
 		case yellow:
-			return isSoundOn ? new NosyBrick(context, rc.getDrawable(R.drawable.yellow), metersToPixelsX, metersToPixelsY)
-			: new Brick(rc.getDrawable(R.drawable.yellow), metersToPixelsX, metersToPixelsY);
+			return new Brick(rc.getDrawable(R.drawable.yellow), metersToPixelsX, metersToPixelsY);
 		case hole:
 			return new Hole(metersToPixelsX, metersToPixelsY);
 		}
@@ -72,8 +66,11 @@ public class Brick extends Graphic {
 		Rect rt = new Rect();
 		if(rt.setIntersect(mBounds, oBall.getPlace()))
 		{
-			return oBall.Intersect(rt);
+			if(oBall.Intersect(rt)){
+				NotifyObservers();
+				return true;
+			}
 		}
 		return false;
-	}	
+	}
 }

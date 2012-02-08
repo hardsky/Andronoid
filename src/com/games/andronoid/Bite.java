@@ -3,7 +3,7 @@ package com.games.andronoid;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 
-public class Bite extends Graphic implements ISensorListener {
+public class Bite extends GraphicSubj implements ISensorListener {
 	private long mLastT = 0;
 	private float mLastDeltaT = 0f;
 	private float mSensorX = 0f;
@@ -33,6 +33,7 @@ public class Bite extends Graphic implements ISensorListener {
 		Rect oIntersect = new Rect();
 		if(oIntersect.setIntersect(oBiteBounds, oBallBounds))
 		{
+			NotifyObservers();
 			ball.Impact(ImpactType.bottom, oIntersect);
 			return true;
 		}

@@ -8,7 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
-public class Life implements IObserver{
+public class Life extends SimpleSubj {
 	
 	private int mCount;
 	private ArrayList<Drawable> mLives;
@@ -31,10 +31,11 @@ public class Life implements IObserver{
 			heart.setBounds(0, 0, 20, 20);
 	}
 	
-	private void Withdraw(){
-		
+	public void Withdraw(){
 		if(mLives.size() != 0)
-			mLives.remove(mLives.size() - 1);		
+			mLives.remove(mLives.size() - 1);
+		
+		NotifyObservers();
 	}
 		
 	public void Draw(Canvas canvas){
@@ -57,12 +58,6 @@ public class Life implements IObserver{
 	
 	public boolean isEmpty() {
 		return mLives.size() == 0;
-	}
-
-	@Override
-	public void update(ISubject subject) {
-		if(subject.getState() == WorldType.life)
-			Withdraw();
 	}
 	
 	public int getLife(){

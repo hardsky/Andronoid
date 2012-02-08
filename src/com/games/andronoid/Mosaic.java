@@ -5,7 +5,7 @@ import java.util.*;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-public class Mosaic{
+public class Mosaic extends SimpleSubj{
 	
 	private ArrayList<Row> mRows;
 	private Rect mBounds;
@@ -33,9 +33,11 @@ public class Mosaic{
 		if(Rect.intersects(oBallBounds, mBounds))
 			for(Row row: mRows)
 				if(row.Intersect(oBall)){
-				
+									
 					if(row.isEmpty())
 						mRows.remove(row);
+					
+					NotifyObservers();
 					
 					return true;
 				}
