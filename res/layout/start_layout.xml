@@ -1,10 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/relativeLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent" android:gravity="center" android:background="@drawable/splash">
-	    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/linearLayout1" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content">
-			<Button android:id="@+id/btnStart" android:layout_height="wrap_content" android:layout_width="150dp" android:text="@string/btn_start"></Button>
-			<Button android:text="@string/btn_rules" android:layout_height="wrap_content" android:layout_width="150dp" android:id="@+id/btnRules"></Button>
-			<Button android:text="@string/btn_settings" android:layout_height="wrap_content" android:layout_width="150dp" android:id="@+id/btnSettings"></Button>
-			<Button android:layout_height="wrap_content" android:layout_width="150dp" android:text="@string/btn_exit" android:id="@+id/btnExit"></Button>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/splash">
+	    <com.google.ads.AdView
+	        android:id="@+id/adView"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentLeft="true"
+	        ads:adSize="BANNER"
+	        ads:adUnitId="MY_AD_UNIT_ID"
+	        ads:loadAdOnCreate="true"
+	        ads:testDevices="TEST_EMULATOR, TEST_DEVICE_ID" >
+	    </com.google.ads.AdView>
+
+	    <LinearLayout
+	        xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:id="@+id/linearLayout1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerVertical="true"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="132dp"
+	        android:orientation="vertical" >
+
+	        <Button
+	            android:id="@+id/btnStart"
+	            android:layout_width="150dp"
+	            android:layout_height="wrap_content"
+	            android:text="@string/btn_start" />
+
+	        <Button
+	            android:id="@+id/btnRules"
+	            android:layout_width="150dp"
+	            android:layout_height="wrap_content"
+	            android:text="@string/btn_rules" />
+
+	        <Button
+	            android:id="@+id/btnSettings"
+	            android:layout_width="150dp"
+	            android:layout_height="wrap_content"
+	            android:text="@string/btn_settings" />
+
+	        <Button
+	            android:id="@+id/btnExit"
+	            android:layout_width="150dp"
+	            android:layout_height="wrap_content"
+	            android:text="@string/btn_exit" />
 	    </LinearLayout>
+
     </RelativeLayout>	
 

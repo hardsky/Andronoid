@@ -1,5 +1,8 @@
 package com.games.andronoid;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +20,10 @@ public class StartActivity extends Activity implements OnClickListener {
 	    Utility.SetClickListener(findViewById(R.id.btnRules), this);
 	    Utility.SetClickListener(findViewById(R.id.btnSettings), this);
 	    Utility.SetClickListener(findViewById(R.id.btnExit), this);
+	    
+	    // Look up the AdView as a resource and load a request.
+	    AdView adView = (AdView)this.findViewById(R.id.adView);
+	    adView.loadAd(new AdRequest());	    
 	}
 	
 	@Override
