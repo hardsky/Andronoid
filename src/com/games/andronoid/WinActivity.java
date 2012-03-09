@@ -1,5 +1,8 @@
 package com.games.andronoid;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +39,7 @@ public class WinActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.game_win_layout);
 		
 		View txtWin = findViewById(R.id.txtWinNext);
-		txtWin.setOnClickListener(this);
+		txtWin.setOnClickListener(this);		
 	}
 
 	@Override

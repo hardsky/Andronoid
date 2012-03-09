@@ -1,5 +1,8 @@
 package com.games.andronoid;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -71,6 +74,11 @@ public class StageActivity extends Activity {
     				StartGameActivity(stView.getMosaicName(), stView.getBackgroundFile(), stView.getMusicFile(), stView.getNextLevel());        			
         	}
         }
+        
+	    // Look up the AdView as a resource and load a request.
+	    AdView adView = (AdView)this.findViewById(R.id.adView);
+	    adView.loadAd(new AdRequest());	    
+        
 	}
 	
 	private String getStartLvl(){

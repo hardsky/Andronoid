@@ -12,9 +12,8 @@
 	        android:layout_alignParentBottom="true"
 	        android:layout_alignParentLeft="true"
 	        ads:adSize="BANNER"
-	        ads:adUnitId="MY_AD_UNIT_ID"
-	        ads:loadAdOnCreate="true"
-	        ads:testDevices="TEST_EMULATOR, TEST_DEVICE_ID" >
+	        ads:adUnitId="a14f45fcce061a7"
+	        ads:loadAdOnCreate="true">
 	    </com.google.ads.AdView>
 
 	    <LinearLayout

@@ -29,7 +29,7 @@ public final class GameSettings {
         
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity);
         
-        setFriction(settings.getInt(PreferenceKeys.FRICTION, 30));
+        setFriction(settings.getInt(PreferenceKeys.FRICTION, 45));
         setMass(settings.getInt(PreferenceKeys.MASS, 50));
         setMusicOn(settings.getBoolean(PreferenceKeys.MUSIC, true));
         setSoundOn(settings.getBoolean(PreferenceKeys.SOUND, true));

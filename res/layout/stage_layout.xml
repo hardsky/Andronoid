@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent" android:orientation="vertical">
-    <TextView  android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/txtHead" android:text="@string/choose_level_header" android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_marginBottom="40px"></TextView>
-    <HorizontalScrollView android:id="@+id/hsv" android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
-        <LinearLayout android:id="@+id/ll" android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal" android:layout_gravity="left"></LinearLayout>
+<RelativeLayout xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <com.google.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="a14f45fcce061a7"
+        ads:loadAdOnCreate="true" >
+    </com.google.ads.AdView>
+
+    <TextView
+        android:id="@+id/txtHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/choose_level_header"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <HorizontalScrollView
+        android:id="@+id/hsv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtHead"
+        android:layout_marginTop="69dp" >
+
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:orientation="horizontal" >
+        </LinearLayout>
     </HorizontalScrollView>
-    
-</LinearLayout>
+
+</RelativeLayout>

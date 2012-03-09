@@ -64,8 +64,8 @@ public class Bite extends GraphicSubj implements ISensorListener {
 		{
 			final float dTC = dT / mLastDeltaT;
 			final float dTdT = dT * dT;
-			final float x = mPosX + (1 - mFriction)*dTC * (mPosX - mLastPosX) + mAccelX
-					* dTdT;
+			final float x = mPosX + (1 - mFriction)*(dTC * (mPosX - mLastPosX) + mAccelX
+					* dTdT);
 					
 			mLastPosX = mPosX;
 			mPosX = x;
