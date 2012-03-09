@@ -3,7 +3,7 @@ package com.games.andronoid;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 
-public class Bite extends GraphicSubj implements ISensorListener {
+public class Bat extends GraphicSubj implements ISensorListener {
 	private long mLastT = 0;
 	private float mLastDeltaT = 0f;
 	private float mSensorX = 0f;
@@ -13,14 +13,14 @@ public class Bite extends GraphicSubj implements ISensorListener {
 	private float mAccelX = 0;
 	private float mFriction = 0.3f;
 
-	public Bite(BitmapDrawable oBite, float metersToPixelsX, float metersToPixelsY, int nFriction)
+	public Bat(BitmapDrawable oBite, float metersToPixelsX, float metersToPixelsY, int nFriction)
 	{
 		super(oBite, metersToPixelsX, metersToPixelsY, 0.01f, 0.002f);		
 		mFriction = nFriction / 100f;
 	}
 		
-	public Bite(Bite bite, int nFriction) {
-		super(bite);
+	public Bat(Bat bat, int nFriction) {
+		super(bat);
 		mFriction = nFriction / 100f;
 	}
 	

@@ -17,7 +17,7 @@ import android.view.WindowManager;
 public class World implements SensorEventListener {
 	
 	private Ball mBall;
-	private Bite mBite;
+	private Bat mBat;
 	private Mosaic mMosaic;
 	private Rect mField;
 	private Context mContext;
@@ -57,12 +57,12 @@ public class World implements SensorEventListener {
 		mMetersToPixelsY = metrics.ydpi / 0.0254f;	
         
 		mBall = new Ball((BitmapDrawable) mRc.getDrawable(R.drawable.ball), mMetersToPixelsX, mMetersToPixelsY, mSettings.getDifficulty());
-		mBite = new Bite((BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetersToPixelsX, mMetersToPixelsY, mSettings.getFriction());
+		mBat = new Bat((BitmapDrawable) mRc.getDrawable(R.drawable.bite), mMetersToPixelsX, mMetersToPixelsY, mSettings.getFriction());
 		mMosaic = Parser.CreateMosaic(oContext, mRc, mSettings, mMetersToPixelsX, mMetersToPixelsY);
 				
 		//bite impacts ball
 		if(mSettings.isSoundOn())
-			mBite.RegisterObserver(new Sound(oContext, R.raw.impact));
+			mBat.RegisterObserver(new Sound(oContext, R.raw.impact));
 		
 		//brick is crashed
 		if(mSettings.isSoundOn())
@@ -88,7 +88,7 @@ public class World implements SensorEventListener {
         mSensorManager.unregisterListener(this);
         mGameTime.Stop();
         
-        mBite.ClearObservers();
+        mBat.ClearObservers();
         mMosaic.ClearObservers();
         mLife.ClearObservers();
 	}
@@ -101,13 +101,13 @@ public class World implements SensorEventListener {
 	{
 		long nCurrentTimeStamp = System.nanoTime();
 		mBall.setCurrentTime(nCurrentTimeStamp);
-		mBite.setCurrentTime(nCurrentTimeStamp);
+		mBat.setCurrentTime(nCurrentTimeStamp);
 		
-		if(!mBite.Intesect(mBall))
+		if(!mBat.Intesect(mBall))
 			mMosaic.Intersect(mBall);
 		
 		Intersect(mBall);
-		Intersect(mBite);
+		Intersect(mBat);
 	}
 		
 	private void Intersect(Ball ball)
@@ -123,25 +123,26 @@ public class World implements SensorEventListener {
 			ball.Impact(ImpactType.right, new Rect(0, 0, ball.getPlace().right - mField.right, 1));
 	}
 	
+	private void Intersect(Bat bat) {
+		if(bat.getPlace().left < mField.left)
+			bat.Impact(ImpactType.left, new Rect(0, 0, mField.left - bat.getPlace().left, 1));
+		else if(bat.getPlace().right > mField.right)
+			bat.Impact(ImpactType.right, new Rect(0, 0, bat.getPlace().right - mField.right, 1));
+		
+	}
+	
 	private void LossBall()
 	{
 		mLife.Withdraw();
 		
 		float x = mField.exactCenterX();
 		mBall = new Ball(mBall, mSettings.getDifficulty());
-		mBite.ClearObservers();
-		mBite = new Bite(mBite, mSettings.getFriction());
+		mBat.ClearObservers();
+		mBat = new Bat(mBat, mSettings.getFriction());
 		if(mSettings.isSoundOn())
-			mBite.RegisterObserver(new Sound(mContext, R.raw.impact));
-		mBite.setOrigin(x-mBite.getPlace().width()/2, mField.height() - mBite.getPlace().height() - 1);//bite on the bottom
-		mBall.setOrigin(x - mBall.getPlace().width()/2, mBite.getPlace().top - mBall.getPlace().height() - 1);
-	}
-	private void Intersect(Bite bite) {
-		if(bite.getPlace().left < mField.left)
-			bite.Impact(ImpactType.left, new Rect(0, 0, mField.left - bite.getPlace().left, 1));
-		else if(bite.getPlace().right > mField.right)
-			bite.Impact(ImpactType.right, new Rect(0, 0, bite.getPlace().right - mField.right, 1));
-		
+			mBat.RegisterObserver(new Sound(mContext, R.raw.impact));
+		mBat.setOrigin(x-mBat.getPlace().width()/2, mField.height() - mBat.getPlace().height() - 1);//bite on the bottom
+		mBall.setOrigin(x - mBall.getPlace().width()/2, mBat.getPlace().top - mBall.getPlace().height() - 1);
 	}
 
 	public void Draw(Canvas canvas)
@@ -149,22 +150,19 @@ public class World implements SensorEventListener {
 		ComputePhysics();
 		
 		mBall.Draw(canvas);
-		mBite.Draw(canvas);
+		mBat.Draw(canvas);
 		mMosaic.Draw(canvas);
 		mLife.Draw(canvas);
 		mScore.Draw(canvas);
 		mGameTime.Draw(canvas);
 	}
 
-	public Bite getBite() {
-		return mBite;
-	}
-
+	
 	public void setBounds(int width, int height) {
 		mField = new Rect(0, 0, width, height);
 		float x = mField.exactCenterX();
-		mBite.setOrigin(x-mBite.getPlace().width()/2, height - mBite.getPlace().height() - 1);//bite on the bottom
-		mBall.setOrigin(x - mBall.getPlace().width()/2, mBite.getPlace().top - mBall.getPlace().height() - 1);
+		mBat.setOrigin(x-mBat.getPlace().width()/2, height - mBat.getPlace().height() - 1);//bite on the bottom
+		mBall.setOrigin(x - mBall.getPlace().width()/2, mBat.getPlace().top - mBall.getPlace().height() - 1);
 		mMosaic.setOrigin(x - mMosaic.getPlace().width()/2, 1 + 20);
 		
 		mLife.setOrigin(0, 1);
@@ -208,7 +206,7 @@ public class World implements SensorEventListener {
 			break;
         }
         
-        mBite.onSensorChanged(sensorX, event.timestamp, System.nanoTime());		
+        mBat.onSensorChanged(sensorX, event.timestamp, System.nanoTime());		
 	}
 	
 	public int getScore(){
